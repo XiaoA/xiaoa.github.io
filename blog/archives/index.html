@@ -1,0 +1,36 @@
+---
+layout: blog
+title: Archives
+permalink: /blog/archives/
+---
+<div class="container">
+  <div class="col-md-8 col-md-offset-2">
+    <h1 class="center homeFont marginTop" id="archives">Archives</h1>
+    <section id="archive-list">
+      <ul class="this">
+	{% for post in site.posts %}
+
+	{% unless post.next %}
+	<h2> {{ post.date | date: '%Y' }}</h2>
+
+	{% else %}
+	{% capture year %}{{ post.date | date: '%Y' }}{% endcapture %}
+	{% capture nyear %}{{ post.next.date | date: '%Y' }}{% endcapture %}
+	{% if year != nyear %}
+	<h2> {{ post.date | date: '%Y' }} </h2>
+	{% endif %}
+	{% endunless %}
+	<li><time>{{ post.date | date:"%b %d" }}</time><a href="{{ post.url }}">{{ post.title }}</a></li>
+	{% endfor %}
+      </ul>
+
+      <!-- <ul class="this"> -->
+      <!-- <h3 class="post_title">Tags</h2> -->
+      <!-- {% for tag in site.tags %} -->
+      <!-- 	<li><a href="/tag/{{ tag[0] }}">{{ tag[0] }}</a></li> -->
+      <!-- {% endfor %} -->
+      <!-- </ul> -->
+
+    </section>
+  </div>
+</div>

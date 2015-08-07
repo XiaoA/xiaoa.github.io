@@ -1,0 +1,31 @@
+---
+layout: null
+---
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+  <title>Andrew Buckingham</title>
+  <link href="andrewbuckingham.net/blog/"/>
+  <link type="application/atom+xml" rel="self" href="http://andrewbuckingham.net/atom.xml"/>
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  <id>http://andrewbuckingham.net/blog</id>
+  <author>
+    <name>Andrew Buckingham</name>
+    <email>abuckingham99@gmail.com</email>
+  </author>
+
+  {% for post in site.posts %}
+  <entry>
+    <id>http://andrewbuckingham.net/blog{{ post.id }}</id>
+    <link type="text/html" rel="alternate" href="http://andrewbuckingham.net/blog{{ post.url }}"/>
+    <title>{{ post.title | xml_escape }}</title>
+    <updated>{{ post.date | date_to_xmlschema }}</updated>
+    <author>
+      <name>Andrew Buckingham</name>
+      <uri>http://andrewbuckingham.net/blog</uri>
+    </author>
+    <content type="html">{{ post.content | xml_escape }}</content>
+  </entry>
+  {% endfor %}
+ 
+</feed>

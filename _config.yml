@@ -1,0 +1,29 @@
+# Site settings
+
+title: "Andrew Buckingham"
+name: "Andrew Buckingham's Blog"
+author: "Andrew Buckingham"
+email: "andrew@andrewbuckingham.net"
+tagline: 'Looking for more to read? Check out the <a href="/blog/archives">Archives</a>!'
+url: "http://andrewbuckingham.net"
+twitter_username: abuckingham
+github_username:  XiaoA
+
+# Build settings
+markdown: kramdown
+highlighter: pygments
+paginate:         10
+paginate_path: "blog/page:num"
+
+# Feed Settings
+name: "Andrew Buckingham"
+description: "Web development and technology site"
+url: "http://andrewbuckingham.net"
+
+# Permalinks
+permalink: "/blog/:year/:month/:day/:title"
+
+# Gems
+gems: ["emoji_for_jekyll", "jekyll_github_sample"]
+
+
