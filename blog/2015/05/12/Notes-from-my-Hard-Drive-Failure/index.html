@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Notes from my Hard Drive Failure</title>
+    <meta name="description" content="Web development and technology site">
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-65293559-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    
+    <!-- Bootstrap CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- Font Awesome CDN -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    <link rel="stylesheet" href="/assets/css/syntax.css">
+    <link rel="canonical" href="http://andrewbuckingham.net/blog/2015/05/12/Notes-from-my-Hard-Drive-Failure">
+  </head>
+
+  <body data-spy="scroll" data-target:".navbar-collapse">
+
+    <!-- Start Navbar -->
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header">
+	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-3">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+	  </button>
+	  <a class="navbar-brand" href="/">Andrew Buckingham</a>
+	</div>
+
+	<!-- Collect the nav links, forms, and other content for toggling -->
+	<div class="collapse navbar-collapse" id="navbar-collapse-3">
+	  <ul class="nav navbar-nav navbar-right">
+            <li><a href="/#home">Home</a></li>
+            <li><a href="/#about">About</a></li>
+	    <li><a href="/#contact">Contact</a></li>
+      	    <li><a href="/#projects">Projects</a></li>
+	    <li class="active"><a href="/blog/">Blog</a></li>
+          </ul>
+	</div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+      <div class="col-md-8 col-md-offset-2 marginTop">
+	<div class="tagline">
+	  Looking for more to read? Check out the <a href="/blog/archives">Archives</a>!
+	</div>
+	<div class="post">
+	  <h1 class="post-title">Notes from my Hard Drive Failure</h1>
+	  <div class="meta_wrapper">
+	    <ul class="post-meta">
+	      <span class="post-date"><li>May 12, 2015
+	      </li></span>
+	      <span class="post-tags"><li>Tags: <a href="/tag/Mac"> Mac </a>  </li></span>
+	    </ul>	
+	  </div>
+	  <p>Last month, my failing hard drive took up a lot of my attention, but I still managed to keep working, and I made progress on my Rails project, as well. I’ve written a few drafts over the last few weeks, but I honestly think they can can be combined into one simple post. (I’m pretty anxious to talk about what I’m doing now, rather than my issues from last month!) Still, there are a few things I learned, and a couple tips that might be useful for others, so I’ll condense it down to one post.</p>
+
+<!-- more -->
+
+<h3 id="signs-of-impending-doom">Signs Of Impending Doom</h3>
+
+<p>One day, all of my browser tabs crashed, while I was watching a YouTube video. it seemed like a corruption with Flash, so I removed Flash, and reinstalled it. That seemed to work for a couple of days,  that I started getting the “spinning pizza wheel” that Macs get when they are having problems processing something. I didn’t want to update to OS X Yosemite until after I had finished the Tealeaf program but I figured a clean install might help resolve whatever issue is going on. OS X comes with Time Machine, which seems like a really easy and effective way to keep your system backed up, but I’ve never used it. I’ve been using <a href="http://www.shirt-pocket.com/SuperDuper/SuperDuperDescription.html">SuperDuper!</a> to clone my Macs for years. I used to run it nightly, but these days, most of my user files are symlinked to <a href="https://www.dropbox.com">Dropbox</a> or <a href="https://hubic.com/en/">Hubic</a>, so I run backups a bit less often. I did a full backup, a couple nights in a row, and it failed both times. So, because you can never be too paranoid, I backed up all of the user files and system files that I thought that I would need. Then I did a clean install and upgraded to the newest OS X operating system. </p>
+
+<h3 id="thoughts-on-os-x-yosemite">Thoughts on OS X Yosemite</h3>
+<p>Whenever a new release of OSX comes out, I always read <a href="http://arstechnica.com/author/john-siracusa/">John Siracusa’s reviews of the latest version</a> for Ars Technica<sup id="fnref:siracusa"><a href="#fn:siracusa" class="footnote">1</a></sup>. I knew there were some good features, but I wasn’t sure how I felt about the new, flatter UI. As it turns out, I really like it, and I wouldn’t want to go back to Mavericks. The integration with my iPhone is better than ever, and everything runs really smoothly (now). After I’d installed Yosemite, things seemed to be working. Once again, I thought that I had resolved the issue. but the frequency of the spinning wheel started to increase. Now I knew I had a problem.  Last year, my SATA cable came loose. I wasn’t sure if that might be the case, or if I might have a problem with the logic board or hard drive. Unfortunately, my AppleCare warranty had already expired.</p>
+
+<h3 id="hard-drive-sata-cable-logic-board-or">Hard drive, SATA cable, Logic Board, or…?</h3>
+<p>I’ve been a big fan of <a href="https://www.smartmontools.org">Smartmontools</a> for a long time. After using the built-in Disk Utility to repair permissions, check the drive, and do a basic S.M.A.R.T. check, I fired up Smartcl (the main tool in Smartmontool), and it said the disk was passing. But I could clearly tell from the OSX console, that the drive had errors. Fortunately, I heard about a unique tool for Mac, Scannerz.</p>
+
+<h3 id="enter-scannerz">Enter Scannerz</h3>
+<p><a href="http://scsc-online.com/index.html">Scannerz</a> is a set of four utilities that can help you determine exactly what is wrong with your computer. Most tools, including Smartmontools, only check the hard drive for errors. With Scannerz, you can check not only the entire drive, but it can also help isolate issues with cables and logic boards. When I bought it, there was a strange issue with the file, and I couldn’t download it. It was late at night, so I sent an email, and was getting ready for bed, when I got a reply back, explaining that there had been a server issue, which was resolved. Then, the owner of the company emailed me with a lengthy set of tips on how to interpret the data. This was late at night. I was very impressed with the service.</p>
+
+<p>Now, I don’t consider myself much of a ‘fixit’ kinda guy. Put me in front of a computer, and I’ll figure out how everything works, but I’ve never been one to unscrew my computer and replace things. But armed with the confidence that comes from looking at a <a href="https://www.ifixit.com/Guide/MacBook+Pro+13-Inch+Unibody+Early+2011+Hard+Drive+Replacement/5119">ifixit guide and video</a>, I decided to replace my hard drive. It was easy, and even enjoyable! Best of all, another scan of my new hard drive, with Scannerz, revealed no errors!</p>
+
+<p>Most similar tools are really just a simple GUI layer over Smartmontools. While Smartmoontools and the native Disk Utility said my drive was fine, Scannerz reported several issues. Scannerz is the real deal. If you have a Mac, and wonder if you should get it, go for it. Unless you administer a bunch of Macs, you probably just need the <strong>Scannerz with Phoenix, Performance Probe 2, and FSE-Lite</strong> version. </p>
+
+<h3 id="caskroom">Caskroom</h3>
+<p>One other gem, which I’d heard of, but never gotten around to trying, was <a href="http://caskroom.io">Caskroom</a>. If you’re on OSX and you like Unix tools, you probably already know that Homebrew is an awesome package manager, which lets you download utilities easily. It’s one of the first things I install on any new Mac. Caskroom is an extension to Homebrew, which allows you to download regular OSX applications, including Google Chrome, Screenflow, or Fantastical, right from the command line! There’s no need to go to the site, download the image, open it, and then unmount the image. Just type in something like this, and you’re good to go:</p>
+
+<p><code>
+brew cask install google-chrome
+</code></p>
+
+<p>The only downside is that not every application can be downloaded this way, and if you’re using a version that is not there, you’ll either need to add it, or go do it the old-fashioned way. But…consider the possibilities. If you had to download dozens of apps, you could use a shell script to set up the bulk of them, and then just deal with any errors or missing apps later.</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:siracusa">
+      <p>Sadly, OSX Yosemite is the final one; the end of an era. <a href="http://arstechnica.com/apple/2015/04/after-fifteen-years-ars-says-goodbye-to-john-siracusas-os-x-reviews/">http://arstechnica.com/apple/2015/04/after-fifteen-years-ars-says-goodbye-to-john-siracusas-os-x-reviews/</a> <a href="#fnref:siracusa" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+	  <br>
+	  <p id="subscribe-invite" class="well well-sm">If you enjoyed this post, you might want to <a href="http://andrewbuckingham.net/blog/feed.atom">subscribe</a>, so you don't miss the next one!</p>
+	</div>
+	<hr />
+
+	<div class="related">
+	  <h2>Related Posts</h2>
+	  <ul class="related-posts">
+	    
+	    <li>
+	      <h3>
+		<a href="/blog/2015/07/17/kcruby-emacs-demo">
+		  KCRuby Emacs Demo
+		  <small>Jul 17, 2015</small>
+		</a>
+	      </h3>
+	    </li>
+	    
+	    <li>
+	      <h3>
+		<a href="/blog/2015/07/13/A-Simple-Way-to-Implement-Case-Insensitive-Searches-in-Rails">
+		  A Simple Way to Implement Case-Insensitive Searches in Rails
+		  <small>Jul 13, 2015</small>
+		</a>
+	      </h3>
+	    </li>
+	    
+	    <li>
+	      <h3>
+		<a href="/blog/2015/06/20/Positit!">
+		  Positit!
+		  <small>Jun 20, 2015</small>
+		</a>
+	      </h3>
+	    </li>
+	    
+	  </ul>
+	</div>
+	<hr>
+	
+	<div id="disqus_thread" class ="well well-sm"></div>
+	<script type="text/javascript">
+	 /* * * CONFIGURATION VARIABLES * * */
+	 var disqus_shortname = 'andrewbuckingham';
+	 
+	 /* * * DON'T EDIT BELOW THIS LINE * * */
+	 (function() {
+           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	 })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+	<script type="text/javascript">
+	 /* * * CONFIGURATION VARIABLES * * */
+	 var disqus_shortname = 'andrewbuckingham';
+	 
+	 /* * * DON'T EDIT BELOW THIS LINE * * */
+	 (function () {
+           var s = document.createElement('script'); s.async = true;
+           s.type = 'text/javascript';
+           s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+           (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+	 }());
+	</script>
+	
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>    
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<!-- <script src="js/bootstrap.min.js"></script> -->
+	<script>
+	 $(".contentContainer").css("min-height",$(window).height());
+	</script>
+      </div>
+    </div>
+  </body>
+</html>
