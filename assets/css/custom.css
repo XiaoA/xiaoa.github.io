@@ -372,3 +372,11 @@ ul.related-posts h3 {
     color: #fff;
 }
 
+#blackjack-thumbnail {
+    margin-bottom: 70px;
+}
+
+
+article.markdown-body.entry-content {
+    margin: 0 30px 0 30px;
+}
