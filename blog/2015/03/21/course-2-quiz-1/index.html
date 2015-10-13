@@ -90,7 +90,301 @@
 
 <hr />
 
-<p>true<script src="https://gist.github.com/XiaoA/e489f82212e3107a14dc.js"> </script></p>
+<noscript><pre>* Quiz: Lesson 1
+
+** Question 1
+Why do they call it a relational database?
+
+*** Solution 1
+Because data is stored and accessed in context, or relation, to other data. Every table has a Primary Key, which is a unique identifier for that row. When that data is inserted into another table, as a Foreign Key, We can form relationships between different data tables, allowing us to select, update, and join data in countless ways.
+
+For example, let&#39;s say that we worked at a university, and we were asked if a student had turned in an assignment. We could check the table with all student activity, &quot;ACTIVITY_ACCUMULATOR&quot;, but we probably wouldn&#39;t understand the data, because user information has been abstracted into UID numbers and keys. But because databases are relational, we can use the information we know to find information that we need.
+
+For example: 
+
+**** USERS table
+
+We know the student&#39;s User ID is: *buchanana*. So we can use that to get more relevant information:
+
+#+BEGIN_SRC sql
+SELECT pk1, user_id, firstname, lastname, row_status, email FROM users WHERE user_id = &#39;buchanana&#39;;
+#+END_SRC
+
+And we would get the following:
+
+|   PK1 | USER_ID   | FIRSTNAME | LASTNAME | ROW_STATUS | EMAIL                 |
+|-------+-----------+-----------+----------+------------+-----------------------|
+| 10002 | buchanana | Andrew    | Buchanan |          2 | buchanana@example.edu |
+
+
+**** COURSE_MAIN table
+
+Now, we can check for the PK1 of the course. We know that the ID includes 34789...
+
+#+BEGIN_SRC sql
+select * from course_main where course_id like &#39;%34789%&#39;;
+
+#+END_SRC
+|    PK1 | COURSE_ID                 | COURSE_NAME      | DATA_SRC_PK1 |
+|--------+---------------------------+------------------+--------------|
+| 598851 | ECON101-0012-34789-FS2014 | Economics 101    |          833 |
+| 788372 | HIST306-0001-34789-SP2015 | U.S. History 306 |          834 |
+
+We can ignore the first row, because it&#39;s the wrong semester. So we know that the =Course Main= table&#39;s primary key is &#39;788372&#39;.
+
+Now that we have the primary keys for the user and the course, we can check the user&#39;s activity.
+
+**** ACTIVITY_ACCUMULATOR table
+
+And we can see that the user submitted an assignment in that class on March 3, 2015, at 2:03PM.
+
+|    PK1 | COURSE_MAIN_PK1 | USERS_PK1 | COURSE_CONTENT_PK1 | DATA                              | TIMESTAMP       |
+|--------+-----------------+-----------+--------------------+-----------------------------------+-----------------|
+| 873737 |          788372 |     10002 |           83712682 | Assignments/assignment_submit.jsp | 03-MAR-15 14:03 |
+|        |                 |           |                    |                                   |                 |
+
+We could do a few things to combine the steps, and also narrow down our search, but even this simple example shows the power of manipulating data in relational databases.
+
+
+** Question 2
+What is SQL?
+
+*** Solution 2
+SQL, or Structured Query Language, is a declarative language that allows us to work with relational databases. Common declarations include: 
+1. SELECT
+2. UPDATE
+3. COMMIT
+4. JOIN
+5. UNION
+6. ADD TABLE
+7. DROP TABLE
+8. INSERT
+
+(In my job, I&#39;m not a DBA, but I do have some do basic database operations. I use the first three daily, 4 and 5 occasionally, and the others almost never.)
+
+** Question 3
+There are two predominant views into a relational database. What are they, and how are they different?
+
+*** Solution 3
+1. *Schema:* Provides a &#39;bird&#39;s eye view&#39; of the structure of the database, including the column and row names, constraints, and data types.
+2. *View:* Provides a live view of the data in a table layout, like a spreadsheet.
+
+** Question 4
+In a table, what do we call the column that serves as the main identifier for a row of data? We&#39;re looking for the general database term, not the column name.
+
+*** Solution 4
+The *primary key* is the main identifier for a row of data in a database table.
+
+** Question 5
+What is a foreign key, and how is it used?
+
+*** Solution 5
+A foreign key in one table is a primary key from another table; it&#39;s used to join the data from multiple tables. (e.g., The =USERS.USER_PK1= primary key will always refer to the same user; if that value is associated with data in another table, that data will then be available to query/edit, just as if it were in the =USERS= table.)
+
+** Question 6
+At a high level, describe the ActiveRecord pattern. This has nothing to do with Rails, but the actual pattern that ActiveRecord uses to perform its ORM duties.
+
+*** Solution 6
+ActiveRecord is a way of accessing databases without SQL (in the Rails  implementation, we can just use Ruby). 
+
+- DB Tables = Classes
+- DB Rows = Objects
+
+** Question 7
+If there&#39;s an ActiveRecord model called &quot;CrazyMonkey&quot;, what should the table name be?
+
+*** Solution 7
+I think it should be =crazy_monkeys=. Fortunately, I can open up the Rails console and check, using the =.tableize= method:
+
+#+BEGIN_SRC sh
+小A曰:rails console
+Loading development environment (Rails 4.2.0)
+irb(main):001:0&gt; &quot;CrazyMonkey&quot;.tableize
+=&gt; &quot;crazy_monkeys&quot;
+#+END_SRC
+
+Looks like I was right. :)
+
+** Question 8
+If I&#39;m building a 1:M association between =Project= and =Issue=, what will the model associations and foreign key be?
+
+*** Solution 8
+
+#+BEGIN_SRC ruby
+  class Project &lt; ActiveRecord::Base
+    has_many: :issues
+  end
+#+END_SRC
+
+#+BEGIN_SRC ruby
+  class Issue &lt; ActiveRecord::Base
+    belongs_to: :project
+  end
+#+END_SRC
+
+** Question 9
+Given this code =class Zoo &lt; ActiveRecord::Base has_many :animals end=
+
+- What do you expect the other model to be and what does database schema look like?
+- What are the methods that are now available to a zoo to call related to animals?
+- How do I create an animal called &quot;jumpster&quot; in a zoo called &quot;San Diego Zoo&quot;?
+
+*** Solution 9
+1) The other table should look like this:
+
+#+BEGIN_SRC ruby
+  class Animal
+    :belongs_to :zoo
+  end
+#+END_SRC
+
+Because the =Zoo= class includes the =has_many :animals= association, we know that =Animal= will include =belongs_to :zoo=. 
+
+Besides all of the inherited methods from =ActiveRecord= and any methods declared within the =Zoo= class, =Zoo= will be able to access =zoo.animal=, as well as =zoo.animal.first=, =zoo.animal.last=, etc.
+
+To create an animal called &quot;jumpster&#39; in a zoo called &quot;San Diego,&quot; you&#39;d need to create the objects:
+
+1. In the terminal, make sure that you are in Rails Console, or navigate to the correct directory and start the Rails Console.
+2. Enter the following Command to create a row for a new &#39;Zoo&#39; object, &#39;San Diego Zoo&#39;, in the database:
+   #+BEGIN_SRC ruby
+     irb(main):019:0&gt; zoo = Zoo.create(name: &#39;San Diego Zoo&#39;)
+   #+END_SRC 
+3. Enter the following command to create a row for a new &#39;Animal&#39; object, &#39;Jumpster&#39;, in the database:
+#+BEGIN_SRC ruby
+irb(main):020:0&gt; Animal.create(name: &#39;jumpster&#39;, zoo: zoo)
+#+END_SRC
+
+** Question 10
+What is mass assignment? What&#39;s the non-mass assignment way of setting values?
+
+*** Solution 10
+Mass assignment is a convenience, which allows us to assign all of the values in a single operation. For example:
+
+#+BEGIN_SRC ruby
+irb(main):021:0&gt; user = User.new({username: &#39;carmichaelc&#39;, firstname: &#39;Chuck&#39;, lastname: &#39;Bartowski&#39;})
+
+# Note that we can omit the &#39;{}&#39; (and also use hash rockets to set values): 
+
+irb(main):021:0&gt; user = User.new(username =&gt; &#39;carmichaelc&#39;, firstname =&gt; &#39;Chuck&#39;, lastname =&gt; &#39;Bartowski&#39;)
+#+END_SRC
+
+Without mass assignment, we&#39;d need to set up each value separately, like this:
+
+#+BEGIN_SRC ruby
+irb(main):021:0&gt; user = User.new user.username = &#39;carmichaelc&#39; user.firstname = &#39;Chuck&#39; user.lastname = &#39;Bartowki&#39;
+#+END_SRC
+
+** Question 11
+What does this code do? =Animal.first=
+
+*** Solution 11
+It will return the first row (remember that a row == an object...) from the =Animal= table.
+
+** Question 12
+If I have a table called &quot;animals&quot; with columns called &quot;name&quot;, and a model called Animal, how do I instantiate an animal object with name set to &quot;Joe&quot;. Which methods makes sure it saves to the database?
+
+*** Solution 12
+You can use the =.new= method, just like with Ruby, but that object will not be persistent. To save it to the database, you&#39;ll also have to call the =.save= method. For example:
+
+#+BEGIN_SRC ruby
+irb(main):025:0&gt; animal = Animal.new(name: &#39;Joe&#39;)
+irb(main):026:0&gt; animal.save
+#+END_SRC
+
+Or you can use =.create= method, from Rails, to instantiate an object and save it to the database, in one operation:
+
+#+BEGIN_SRC ruby
+irb(main):025:0&gt; animal = Animal.create(name: &#39;Joe&#39;)
+#+END_SRC
+
+** Question 13
+How does a M:M association work at the database level?
+
+
+*** Solution 13
+
+- Table *users* has a 1:M association with the JOIN table, *memberships*.
+- Table *organizations* has a 1:M association with the JOIN table, *memberships*.
+- Table *memberships* belongs to both *users* and *organizations*, and provides a means for joining the other tables.
+
+Consider these very simple models:
+
+#+BEGIN_SRC ruby
+  class User &lt; ActiveRecord::Base
+    has_many :memberships
+    has_many :organizations, through :memberships
+  end
+
+  class Membership &lt; ActiveRecord::Base
+    belongs_to :users
+    belongs_to :organizations
+  end
+
+  class Organization &lt; ActiveRecord::Base
+    has_many :memberships
+    has_many :users, through :memberships
+  end
+#+END_SRC
+
+**** Users
+
+|  ID | USERNAME | FIRSTNAME | LASTNAME | EMAIL               |
+|-----+----------+-----------+----------+---------------------|
+| 111 | smithj   | John      | Smith    | smithj@example.com  |
+| 112 | jensenc  | Carol     | Jensen   | jensenc@example.com |
+
+**** Memberships
+
+| ID | USER_ID | ORGANIZATION_ID | ROLE | ROW_STATUS |
+|----+---------+-----------------+------+------------|
+|  1 |     111 |              54 | L    |          0 |
+|  2 |     112 |              54 | M    |          2 |
+
+
+**** Organizations
+
+| ID | ORGANIZATION NAME   | Category |
+|----+---------------------+----------|
+| 54 | Pocahontas Fan Club | History  |
+
+Looking at the the information in the database, we can see that John Smith is the Leader of the &#39;Pocahontas Fan Club&#39;, and that Carol Jensen is a Member. Also, her &#39;ROW_STATUS&#39; is different, so we&#39;ll need to check the schema to find out what that means.
+
+ActiveRecord provides a powerful way to add, edit, and remove data from the database, without needing to worry about different SQL syntax styles, directly from within Rails. The database provides a way to easily verify the data, and it also allows Rails developers to work with Database Administrators and programmers more familiar with SQL.
+
+** Question 14
+What are the two ways to support a M:M association at the ActiveRecord model level? Pros and cons of each approach?
+
+*** Solution 14
+There are two ways to support a M:M association with ActiveRecord:
+
+1. =has_and_belongs_to_many=: The main advantage is that it doesn&#39;t require a JOIN table, because it can make the M:M association directly between two tables. 
+2. =has many :through=: requires a JOIN table and a JOIN model, but because we have a JOIN table, we can add more attributes to the association, so that it can store more data, making it a much more flexible option.
+
+Going forward, =has_many :through= is the recommended method for creating ActiveRecord associations, because =has_and_belongs_to_many= will be deprecated in the future.
+
+** Question 15
+Suppose we have a User model and a Group model, and we have a M:M association all set up. How do we associate the two?
+
+*** Solution 15
+We can create a =USER_GROUP= model, and a =user_groups= table.
+
+#+BEGIN_SRC ruby
+  class User &lt; ActiveRecord::Base
+    has_many :user_groups, foreign_key: :user_id
+    has many :groups, through: :user_groups
+  end
+
+  class UserGroup &lt; ActiveRecord::Base
+    belongs_to :user, foreign_key: :user_id
+    belongs_to :group, foreign_key: :group_id
+  end
+
+  class Group &lt; ActiveRecord::Base
+    has_many :user_groups, foreign_key: :group_id
+    has_many :users, through: :user_groups
+  end
+#+END_SRC</pre></noscript>
+<script src="https://gist.github.com/XiaoA/e489f82212e3107a14dc.js"> </script>
 
 
 	  <br>

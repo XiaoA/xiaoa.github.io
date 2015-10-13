@@ -82,7 +82,203 @@
 
 <!-- more -->
 
-<p>true<script src="https://gist.github.com/XiaoA/e8365388ce81700ff573.js"> </script></p>
+<noscript><pre>* Quiz: Lesson Three
+
+** Question 1 
+What&#39;s the difference between rendering and redirecting? What&#39;s the impact with regards to instance variables, view templates?
+
+** Answer 1
+
+Consider this example:
+#+BEGIN_SRC ruby
+  def update
+    if @post.update(post_params)
+      flash[:notice] = &quot;The post was updated.&quot;
+      redirect_to post_path(@post)
+    else
+      render &#39;edit&#39;
+    end
+  end
+#+END_SRC
+
+If the update is successful, a message is displayed: &quot;The post was updated.&quot; Then the user is redirected to the main &#39;/posts&#39; page. If the update is not successful, the &#39;/posts/:id/edit&#39; page is rendered. Rending the template is important, because then the instance variable (*@post* in the example above), will still be accessible.
+
+** Question 2
+If I need to display a message on the view template, and I&#39;m redirecting, what&#39;s the easiest way to accomplish this?
+** Answer 2
+In the previous example, we saw:
+#+BEGIN_SRC ruby
+flash[:notice] = &quot;The post was updated.&quot;
+#+END_SRC
+The message will disappear after another action is performed. For more information on *flash*, see: [[https://github.com/rails/rails/blob/4-2-stable/actionpack/lib/action_dispatch/middleware/flash.rb][rails/actionpack/lib/action_dispatch/middleware/flash.rb]]
+
+** Question 3
+If I need to display a message on the view template, and I&#39;m rendering, what&#39;s the easiest way to accomplish this?
+** Answer 3
+You can use =flash.now=.
+#+BEGIN_SRC ruby
+flash.now[:alert] = &quot;This is a sample message.&quot;
+#+END_SRC
+The documentation is here: [[https://github.com/rails/rails/blob/4-2-stable/actionpack/lib/action_dispatch/middleware/flash.rb]]
+** Question 4
+Explain how we should save passwords to the database.
+
+** Answer 4
+If we take the &#39;Post-it&#39; app that I&#39;ve just created as an example:
+1. In the *user.rb* model:
+#+BEGIN_SRC ruby
+class User &lt; ActiveRecord::Base
+  has_many :posts
+  has_many :comments
+  has_many :votes
+  
+  has_secure_password validations: false
+
+  validates :username, presence: true, uniqueness: true
+  validates :password, presence: true, on: :create, length: {minimum: 6}
+end
+#+END_SRC 
+
+We can see that the model requires a secure password, with a minimum of 6 characters, which is validated upon creation (this prevents the app from asking for a password after every user action).
+
+Passwords are not save as strings within the database. Rather, Rails uses a &#39;one-way hash&#39; to create a &#39;password digest&#39; in the database. A password like &quot;X7gh29y!&quot; could become something like &quot;hsi38smcskjcb8nfo08u23dlls08wejdnkxjsbekcksie&quot; after the one-way hash conversion. When a user logs in, the following process happens:
+
+1. The user enters a username and password.
+2. The username is matched in the database. The password is converted to a one-way hash. If it matches the password digest (previously one-way hashed) in the database, the system authenticates the user. If not, the attempt is rejected. *Note*, in Rails, this requires the *bcrypt-ruby* gem: https://rubygems.org/gems/bcrypt-ruby/
+
+Looking over the Rails [[https://github.com/rails/rails/blob/master/activemodel/lib/active_model/secure_password.rb][rails/activemodel/lib/active_model/secure_password.rb]] provides a lot of interesting facts about password security in Rails. For example, I just learned that the bcrypt-ruby gem has a limit of 72 characters, so if a password is passed with more than 72 characters, any extra characters will be ignored.
+
+Beyond Rails-specific authentication methods, a general concept of password security should include ways to prevent passwords from being guessed or accessed directly by malicious parties.
+
+Additional security features that are sometimes implemented:
+- In some cases, after a set number of failed attempts, the user is required to enter a CAPTCHA value, or even wait a designated amount of time for the authentication process to reset (optional).
+- If a user forgets his or her password, the database should not be able to return the original password. If it can return the original password, that means the password was saved as a string in the database, and could be viewed by malicious parties. (This should never happen in Rails, unless the developer has abandoned conventions...)
+
+
+
+** Question 5
+What should we do if we have a method that is used in both controllers and views?
+** Answer 5
+We can create a helper method in =ApplicationController.rb=.
+
+Here&#39;s an example of one in my Post-it app:
+#+BEGIN_SRC ruby
+helper_method :current_user, :logged_in?
+#+END_SRC 
+
+** Question 6
+What is memoization? How is it a performance optimization?
+** Answer 6
+Memoization is a technique that improves performance by querying the database once, and then keeping that value in memory, so that subsequent actions/calls do not require further queries. According to [[http://en.wikipedia.org/wiki/Memoization][Wikipedia]], it was invented by Donald Michie.
+
+My Post-it app has a couple examples. For example, in ApplicationController:
+#+BEGIN_SRC ruby
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+#+END_SRC
+
+This method checks to see if there is an active user, and if there is, assigns that user to the *@current_user* instance variable. For the rest of the session, the application will &#39;remember&#39; the identity of the current user, so there will be no need to query the database again. 
+
+The syntax above is the most common in Rails, but there are other ways to use memoization. Justin Weiss has an interesting blog post on other, more &#39;advanced&#39; versions here: http://www.justinweiss.com/blog/2014/07/28/4-simple-memoization-patterns-in-ruby-and-one-gem/
+
+** Question 7
+If we want to prevent unauthenticated users from creating a new comment on a post, what should we do?
+** Answer 7
+In *application_controller.rb*:
+#+BEGIN_SRC ruby
+class ApplicationController &lt; ActionController::Base
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  protect_from_forgery with: :exception
+
+  helper_method :current_user, :logged_in?
+  
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+
+  def logged_in?
+    !!current_user
+  end
+
+  def require_user
+    if !logged_in?
+      flash[:error] = &quot;You must be logged in to do that.&quot;
+      redirect_to root_path
+    end
+  end
+end
+#+END_SRC
+
+- The *current_user* method checks to see if there is a user is logged in for the session, and if so, loads the user_id into an instance variable, *@current_user*.
+- Predictably, *logged_in* checks to see if the user is logged in.
+- And *require_user* returns an error message when a user tries to perform an action (such as commenting on a post) without being logged in.
+- All of the other controllers inherit these methods. Additionally, we can use =before_action :require_user= in *comments_controller.rb*:
+
+
+#+BEGIN_SRC ruby
+  class CommentsController &lt; ApplicationController
+
+    before_action :require_user
+
+    #(code omitted for brevity)
+  end
+#+END_SRC
+
+
+
+
+** Question 8
+Suppose we have the following table for tracking &quot;likes&quot; in our application. How can we make this table polymorphic? Note that the &quot;user_id&quot; foreign key is tracking who created the like.
+
+| id | user_id | photo_id | video_id | post_id |
+|----+---------+----------+----------+---------|
+|  1 |       4 |          |       12 |         |
+|  2 |       7 |          |          |       3 |
+|  3 |       2 |        6 |          |         |
+
+** Answer 8
+
+This table:
+
+| id | user_id | photo_id | video_id | post_id |
+|----+---------+----------+----------+---------|
+|  1 |       4 |          |       12 |         |
+|  2 |       7 |          |          |       3 |
+|  3 |       2 |        6 |          |         |
+
+Can be represented in a polymorphic association like this:
+
+| id | user_id | likeable_type | likeable_id |
+|----+---------+---------------+-------------|
+|  1 |       4 | Video         |          12 |
+|  2 |       7 | Post          |           3 |
+|  3 |       2 | Photo         |           6 |
+
+** Question 9
+How do we set up polymorphic associations at the model layer? Give example for the polymorphic model (e.g., Vote) as well as an example parent model (the model on the 1 side, e.g.,, Post).
+** Answer 9
+**** Vote Model
+#+BEGIN_SRC ruby
+  class Vote &lt; ActiveRecord::Base
+    belongs_to :voteable, polymorphic: true
+  end
+#+END_SRC
+
+**** Voteable Model
+#+BEGIN_SRC ruby
+  class Voteable &lt; ActiveRecord::Base
+    has_many :votes, as: :voteable
+  end
+#+END_SRC
+** Question 10
+What is an ERD diagram, and why do we need it?
+** Answer 10
+An ERD, or Entity-relationship diagram, is a model that shows the way that data objects/entities are associated. It&#39;s a fundamental way to organize and structure our data models, and build schemas that are stable, scalable, and robust. (The [[http://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model][Wikipedia entry for ERD]] is a fascinating read!)
+
+Front-end developers usually use wire frames to plan their sites. I like to think of an ERD as a kind of &#39;wire frame for back-end/full-stack developers&#39;.</pre></noscript>
+<script src="https://gist.github.com/XiaoA/e8365388ce81700ff573.js"> </script>
 
 
 	  <br>
