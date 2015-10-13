@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>The Value of Practice</title>
+    <meta name="description" content="Web development and technology site">
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-65293559-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    
+    <!-- Bootstrap CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- Font Awesome CDN -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    <link rel="stylesheet" href="/assets/css/syntax.css">
+    <link rel="canonical" href="http://andrewbuckingham.net/blog/2014/10/13/The-Value-of-Practice/">
+  </head>
+
+  <body data-spy="scroll" data-target:".navbar-collapse">
+
+    <!-- Start Navbar -->
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header">
+	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-3">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+	  </button>
+	  <a class="navbar-brand" href="/">Andrew Buckingham</a>
+	</div>
+
+	<!-- Collect the nav links, forms, and other content for toggling -->
+	<div class="collapse navbar-collapse" id="navbar-collapse-3">
+	  <ul class="nav navbar-nav navbar-right">
+            <li><a href="/#home">Home</a></li>
+            <li><a href="/#about">About</a></li>
+	    <li><a href="/#contact">Contact</a></li>
+      	    <li><a href="/#projects">Projects</a></li>
+	    <li class="active"><a href="/blog/">Blog</a></li>
+          </ul>
+	</div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+      <div class="col-md-8 col-md-offset-2 marginTop">
+	<div class="tagline">
+	  Looking for more to read? Check out the <a href="/blog/archives">Archives</a>!
+	</div>
+	<div class="post">
+	  <h1 class="post-title">The Value of Practice</h1>
+	  <div class="meta_wrapper">
+	    <ul class="post-meta">
+	      <span class="post-date"><li>Oct 13, 2014
+	      </li></span>
+	      <span class="post-tags"><li>Tags: <a href="/tag/ruby"> ruby </a> <a href="/tag/code"> code </a>  </li></span>
+	    </ul>	
+	  </div>
+	  <p>I’m working my way through the pre-course ‘<a href="https://www.gotealeaf.com/books/ruby/read/flow_control#casestatement">Learn Ruby</a>’ online textbook at Tealeaf, and I came across a problem that I couldn’t solve without checking the answer. So after I watched the video and followed along, I created my own simple variation. It was similar to the original, but different enough to demonstrate that I’d internalized the lesson. </p>
+
+<p>I like writing code because it’s all about solving problems, and it can be incredibly expressive. But learning anything requires us to move just beyond our current capabilities, and apply what we know to new problems. Here is a simple example of how I did that.</p>
+
+<!-- more -->
+
+<p>The exact details of the problem are not that interesting, but essentially, Exercise 5 asked me to rewrite an <strong>if/else method</strong> (‘evaluate_num’), which I’d made for Exercise 3, as a <strong>case method</strong>, using two different forms of the syntax (‘evaluate_case1_num’ and ‘evaluate_case2_num’). I had some difficulty, so I checked the solution.</p>
+
+<p>Here is the authors’ solution:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="lineno"> 1</span> <span class="c1"># evaluate_num_revisited.rb</span>
+<span class="lineno"> 2</span> 
+<span class="lineno"> 3</span> <span class="k">def</span> <span class="nf">evaluate_num</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+<span class="lineno"> 4</span>   <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mi">0</span>
+<span class="lineno"> 5</span>     <span class="nb">puts</span> <span class="s2">&quot;You can&#39;t enter a negative num!&quot;</span>
+<span class="lineno"> 6</span>   <span class="k">elsif</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">50</span>
+<span class="lineno"> 7</span>     <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">num</span><span class="si">}</span><span class="s2"> is between 0 and 50&quot;</span>
+<span class="lineno"> 8</span>   <span class="k">elsif</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">100</span>
+<span class="lineno"> 9</span>     <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">num</span><span class="si">}</span><span class="s2"> is between 51 and 100&quot;</span>
+<span class="lineno">10</span>   <span class="k">else</span>
+<span class="lineno">11</span>     <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">num</span><span class="si">}</span><span class="s2"> is above 100&quot;</span>
+<span class="lineno">12</span>   <span class="k">end</span>
+<span class="lineno">13</span> <span class="k">end</span>
+<span class="lineno">14</span> 
+<span class="lineno">15</span> <span class="k">def</span> <span class="nf">evaluate_case1_num</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+<span class="lineno">16</span>   <span class="k">case</span>
+<span class="lineno">17</span>   <span class="k">when</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mi">0</span>
+<span class="lineno">18</span>     <span class="nb">puts</span> <span class="s2">&quot;You can&#39;t enter a negative num!&quot;</span>
+<span class="lineno">19</span>   <span class="k">when</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">50</span>
+<span class="lineno">20</span>     <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">num</span><span class="si">}</span><span class="s2"> is between 0 and 50&quot;</span>
+<span class="lineno">21</span>   <span class="k">when</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">100</span>
+<span class="lineno">22</span>     <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">num</span><span class="si">}</span><span class="s2"> is between 51 and 100&quot;</span>
+<span class="lineno">23</span>   <span class="k">else</span>
+<span class="lineno">24</span>     <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">num</span><span class="si">}</span><span class="s2"> is above 100&quot;</span>
+<span class="lineno">25</span>   <span class="k">end</span>
+<span class="lineno">26</span> <span class="k">end</span>
+<span class="lineno">27</span> 
+<span class="lineno">28</span> <span class="k">def</span> <span class="nf">evaluate_case2_num</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+<span class="lineno">29</span>   <span class="k">case</span> <span class="n">num</span>
+<span class="lineno">30</span>   <span class="k">when</span> <span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">50</span>
+<span class="lineno">31</span>     <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">num</span><span class="si">}</span><span class="s2"> is between 0 and 50&quot;</span>
+<span class="lineno">32</span>   <span class="k">when</span> <span class="mi">51</span><span class="o">.</span><span class="n">.</span><span class="mi">100</span>
+<span class="lineno">33</span>     <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">num</span><span class="si">}</span><span class="s2"> is between 51 and 100&quot;</span>
+<span class="lineno">34</span>   <span class="k">else</span>
+<span class="lineno">35</span>     <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mi">0</span>
+<span class="lineno">36</span>       <span class="nb">puts</span> <span class="s2">&quot;You can&#39;t enter a negative num!&quot;</span>
+<span class="lineno">37</span>     <span class="k">else</span>
+<span class="lineno">38</span>       <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">num</span><span class="si">}</span><span class="s2"> is above 100&quot;</span>
+<span class="lineno">39</span>     <span class="k">end</span>
+<span class="lineno">40</span>   <span class="k">end</span>
+<span class="lineno">41</span> <span class="k">end</span>
+<span class="lineno">42</span> 
+<span class="lineno">43</span> <span class="nb">puts</span> <span class="s2">&quot;Please enter a number between 0 and 100.&quot;</span>
+<span class="lineno">44</span> <span class="n">number</span> <span class="o">=</span> <span class="nb">gets</span><span class="o">.</span><span class="n">chomp</span><span class="o">.</span><span class="n">to_i</span>
+<span class="lineno">45</span> 
+<span class="lineno">46</span> <span class="n">evaluate_num</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<span class="lineno">47</span> <span class="n">evaluate_case1_num</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<span class="lineno">48</span> <span class="n">evaluate_case2_num</span><span class="p">(</span><span class="n">number</span><span class="p">)</span></code></pre></div>
+
+<p>After I saw this and watched the video, I understood what I’d been doing wrong, but I wasn’t sure if I could apply what I’d learned. So I created my own original version. It’s very similar, but instead of asking for a number, it asks the user to talk about his/her day. The feedback the user gets depends on the length of the answer.</p>
+
+<p>The point of doing three versions is to demonstrate three ways to solve the same problem, using both ‘if/else’ statements and ‘case’ statements. My program follows the same form, but makes a few changes. For example, in the <strong>string_length</strong> method:</p>
+
+<ul>
+  <li>Instead of asking for a number, it lets you type in whatever you want, and it counts the number of characters in your answer. </li>
+  <li>It provides three answer options, depending on the length of your answer.</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">string_length</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="nb">puts</span> <span class="s2">&quot;You have to give me something to work with, here.&quot;</span>
+  <span class="k">elsif</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">10</span>
+    <span class="nb">puts</span> <span class="s2">&quot;You&#39;re not much with words, are you?&quot;</span>
+  <span class="k">elsif</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">20</span>
+    <span class="nb">puts</span> <span class="s2">&quot;You&#39;ve got a lot to say.&quot;</span>
+  <span class="k">else</span>
+    <span class="nb">puts</span> <span class="s2">&quot;Sounds like you had quite a day!&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+<ol>
+  <li>If the user provides no answer, the program replies, “You have to give me something to work with here.”</li>
+  <li>If the user’s answer is 10 characters or less, the program says, “You’re not much with words, are you?”</li>
+  <li>For answers of 11 - 20 characters, the response is: “Sounds like you had quite a day!”</li>
+  <li>Answers with 21 or more characters prompt the reply, “Sounds like you had quite a day!”</li>
+</ol>
+
+<p>Here’s the full version, with the three versions that perform the same behavior:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="lineno"> 1</span> <span class="c1"># I had trouble figuring out 05_flow_control/evaluate_num.rb on my own, so I created a new version for practice.</span>
+<span class="lineno"> 2</span> <span class="c1"># This program asks how your day was. The length of your answer determines the reply!</span>
+<span class="lineno"> 3</span> <span class="k">def</span> <span class="nf">string_length</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+<span class="lineno"> 4</span>   <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="lineno"> 5</span>     <span class="nb">puts</span> <span class="s2">&quot;You have to give me something to work with, here.&quot;</span>
+<span class="lineno"> 6</span>   <span class="k">elsif</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">10</span>
+<span class="lineno"> 7</span>     <span class="nb">puts</span> <span class="s2">&quot;You&#39;re not much with words, are you?&quot;</span>
+<span class="lineno"> 8</span>   <span class="k">elsif</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">20</span>
+<span class="lineno"> 9</span>     <span class="nb">puts</span> <span class="s2">&quot;You&#39;ve got a lot to say.&quot;</span>
+<span class="lineno">10</span>   <span class="k">else</span>
+<span class="lineno">11</span>     <span class="nb">puts</span> <span class="s2">&quot;Sounds like you had quite a day!&quot;</span>
+<span class="lineno">12</span>   <span class="k">end</span>
+<span class="lineno">13</span> <span class="k">end</span>
+<span class="lineno">14</span> 
+<span class="lineno">15</span> <span class="k">def</span> <span class="nf">string_length_case1</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+<span class="lineno">16</span>   <span class="k">case</span>
+<span class="lineno">17</span>   <span class="k">when</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="lineno">18</span>     <span class="nb">puts</span> <span class="s2">&quot;You have to give me something to work with, here.&quot;</span>
+<span class="lineno">19</span>   <span class="k">when</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">10</span>
+<span class="lineno">20</span>     <span class="nb">puts</span> <span class="s2">&quot;You&#39;re not much with words, are you?&quot;</span>
+<span class="lineno">21</span>   <span class="k">when</span> <span class="n">num</span> <span class="o">&lt;=</span><span class="mi">20</span>
+<span class="lineno">22</span>     <span class="nb">puts</span> <span class="s2">&quot;You&#39;ve got a lot to say.&quot;</span>
+<span class="lineno">23</span>   <span class="k">else</span>
+<span class="lineno">24</span>     <span class="nb">puts</span> <span class="s2">&quot;Sounds like you had quite a day!&quot;</span>
+<span class="lineno">25</span>   <span class="k">end</span>
+<span class="lineno">26</span> <span class="k">end</span>
+<span class="lineno">27</span> 
+<span class="lineno">28</span> <span class="k">def</span> <span class="nf">string_length_case2</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+<span class="lineno">29</span>   <span class="k">case</span> <span class="n">num</span>
+<span class="lineno">30</span>   <span class="k">when</span> <span class="mi">1</span><span class="o">.</span><span class="n">.</span><span class="mi">10</span>
+<span class="lineno">31</span>     <span class="nb">puts</span> <span class="s2">&quot;You&#39;re not much with words, are you?&quot;</span>
+<span class="lineno">32</span>   <span class="k">when</span> <span class="mi">11</span><span class="o">.</span><span class="n">.</span><span class="mi">20</span>
+<span class="lineno">33</span>     <span class="nb">puts</span> <span class="s2">&quot;You&#39;ve got a lot to say.&quot;</span>
+<span class="lineno">34</span>   <span class="k">else</span>
+<span class="lineno">35</span>     <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="lineno">36</span>       <span class="nb">puts</span> <span class="s2">&quot;You have to give me something to work with, here.&quot;</span>
+<span class="lineno">37</span>     <span class="k">else</span>
+<span class="lineno">38</span>       <span class="nb">puts</span> <span class="s2">&quot;Sounds like you had quite a day!&quot;</span>
+<span class="lineno">39</span>     <span class="k">end</span>
+<span class="lineno">40</span>   <span class="k">end</span>
+<span class="lineno">41</span> <span class="k">end</span>
+<span class="lineno">42</span> 
+<span class="lineno">43</span> <span class="nb">puts</span> <span class="s2">&quot;Tell me about your day.&quot;</span>
+<span class="lineno">44</span> <span class="n">number</span> <span class="o">=</span> <span class="nb">gets</span><span class="o">.</span><span class="n">chomp</span><span class="o">.</span><span class="n">to_s</span><span class="o">.</span><span class="n">length</span>
+<span class="lineno">45</span> 
+<span class="lineno">46</span> <span class="n">string_length</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<span class="lineno">47</span> <span class="n">string_length_case1</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<span class="lineno">48</span> <span class="n">string_length_case2</span><span class="p">(</span><span class="n">number</span><span class="p">)</span></code></pre></div>
+
+<p>The code itself is very simple. But it’s important to study good examples, and then use them as a basis for making new and more complex discoveries. <em>And that is how we learn!</em> I was a teacher before, and I have always been interested in understanding how the mind works, and how to improve my ability to learn. One of the most influential scholars, whose theories have resonated with my own experience of learning, is the Psychologist and Learning Theorist, <a href="https://en.wikipedia.org/wiki/Lev_Vygotsky">Lev Vgotsky</a>. He posited the idea of a “<a href="https://en.wikipedia.org/wiki/Zone_of_proximal_development">Zone of Proximal Development</a>,” which was just beyond the current level of a student’s ability to perform learning tasks.</p>
+
+<p>At the risk of oversimplifying, this means that learning occurs when we move from a point where we cannot perform tasks without help, to a point where we can do them on our own (A.K.A. our Zone of Proximal Development). With the proper support (‘scaffolding’) to build this competency, I have no doubt I’ll keep learning for the rest of my life! This is just one example of how I am building my knowledge of Ruby every day. I have a lot to learn, but every day, I take another step…</p>
+
+
+	  <br>
+	  <p id="subscribe-invite" class="well well-sm">If you enjoyed this post, you might want to <a href="http://andrewbuckingham.net/blog/feed.atom">subscribe</a>, so you don't miss the next one!</p>
+	</div>
+	<hr />
+
+	<div class="related">
+	  <h2>Related Posts</h2>
+	  <ul class="related-posts">
+	    
+	    <li>
+	      <h3>
+		<a href="/blog/2015/07/17/kcruby-emacs-demo">
+		  KCRuby Emacs Demo
+		  <small>Jul 17, 2015</small>
+		</a>
+	      </h3>
+	    </li>
+	    
+	    <li>
+	      <h3>
+		<a href="/blog/2015/07/13/A-Simple-Way-to-Implement-Case-Insensitive-Searches-in-Rails">
+		  A Simple Way to Implement Case-Insensitive Searches in Rails
+		  <small>Jul 13, 2015</small>
+		</a>
+	      </h3>
+	    </li>
+	    
+	    <li>
+	      <h3>
+		<a href="/blog/2015/06/20/Positit!">
+		  Positit!
+		  <small>Jun 20, 2015</small>
+		</a>
+	      </h3>
+	    </li>
+	    
+	  </ul>
+	</div>
+	<hr>
+	
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>    
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<!-- <script src="js/bootstrap.min.js"></script> -->
+	<script>
+	 $(".contentContainer").css("min-height",$(window).height());
+	</script>
+      </div>
+    </div>
+  </body>
+</html>

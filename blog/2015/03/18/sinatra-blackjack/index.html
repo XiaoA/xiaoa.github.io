@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Sinatra Blackjack</title>
+    <meta name="description" content="Web development and technology site">
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-65293559-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    
+    <!-- Bootstrap CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- Font Awesome CDN -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    <link rel="stylesheet" href="/assets/css/syntax.css">
+    <link rel="canonical" href="http://andrewbuckingham.net/blog/2015/03/18/sinatra-blackjack/">
+  </head>
+
+  <body data-spy="scroll" data-target:".navbar-collapse">
+
+    <!-- Start Navbar -->
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header">
+	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-3">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+	  </button>
+	  <a class="navbar-brand" href="/">Andrew Buckingham</a>
+	</div>
+
+	<!-- Collect the nav links, forms, and other content for toggling -->
+	<div class="collapse navbar-collapse" id="navbar-collapse-3">
+	  <ul class="nav navbar-nav navbar-right">
+            <li><a href="/#home">Home</a></li>
+            <li><a href="/#about">About</a></li>
+	    <li><a href="/#contact">Contact</a></li>
+      	    <li><a href="/#projects">Projects</a></li>
+	    <li class="active"><a href="/blog/">Blog</a></li>
+          </ul>
+	</div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+      <div class="col-md-8 col-md-offset-2 marginTop">
+	<div class="tagline">
+	  Looking for more to read? Check out the <a href="/blog/archives">Archives</a>!
+	</div>
+	<div class="post">
+	  <h1 class="post-title">Sinatra Blackjack</h1>
+	  <div class="meta_wrapper">
+	    <ul class="post-meta">
+	      <span class="post-date"><li>Mar 18, 2015
+	      </li></span>
+	      <span class="post-tags"><li>Tags: <a href="/tag/ruby"> ruby </a> <a href="/tag/code"> code </a> <a href="/tag/tealeaf"> tealeaf </a> <a href="/tag/sinatra"> sinatra </a>  </li></span>
+	    </ul>	
+	  </div>
+	  <p>Step up and place your bets! I’ve created a simple Blackjack game here: <a href="https://salty-crag-8411.herokuapp.com/">https://salty-crag-8411.herokuapp.com/</a>. I hope you’ll give it a try! I built it with <a href="http://www.sinatrarb.com/">Sinatra</a> and deployed it to <a href="https://www.heroku.com/">Heroku</a>.</p>
+
+<p>Like Rails, Sinatra is a Domain-Specific Language, or <a href="http://en.wikipedia.org/wiki/Domain-specific_language">DSL</a>, based on Ruby. Sinatra uses a simple syntax for specifying routes with Ruby blocks, which are outlined on Sinatra’s <a href="http://www.sinatrarb.com/intro.html">Getting Started</a> page.</p>
+
+<p>In my <a href="https://github.com/XiaoA/sinatra_blackjack_webapp">Sinatra Blackjack game</a>, these routes help control the flow of the Blackjack game, as the player competes with the dealer for the highest Blackjack score (21). Just like Rails, it uses the <a href="mvc">MVC</a> pattern to render or redirect the appropriate page. Sinatra is a pure joy to work with; simple but powerful! Here’s how I used it to build a simple Blackjack game.</p>
+
+<!-- more -->
+
+<h2 id="game-start">Game Start</h2>
+<p>Sinatra serves the ‘/’ (root) route, and evaluates the conditional in the <code>'do'</code> block:</p>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">This Github Sample</a> is by <a href="https://github.com/XiaoA">XiaoA</a>
+  </div>
+  <div class="meta-info">
+    main.rb <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">view</a> <a href="https://raw.githubusercontent.com/XiaoA/sinatra_blackjack_webapp/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">raw</a>
+  </div>
+</div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">get</span> <span class="s1">&#39;/&#39;</span> <span class="k">do</span>
+  <span class="k">if</span> <span class="n">session</span><span class="o">[</span><span class="ss">:player_name</span><span class="o">]</span>
+    <span class="n">redirect</span> <span class="s1">&#39;/game&#39;</span>
+  <span class="k">else</span>
+    <span class="n">redirect</span> <span class="s1">&#39;/new_player&#39;</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+<p>If the <code>session[:player_name]</code> contains a value (because the user has entered a name into the input form), the game is redirected to the <code>/game</code> view. If it’s empty, the user must enter a name, so it redirects to the <code>/new_player</code> route.</p>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">This Github Sample</a> is by <a href="https://github.com/XiaoA">XiaoA</a>
+  </div>
+  <div class="meta-info">
+    main.rb <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">view</a> <a href="https://raw.githubusercontent.com/XiaoA/sinatra_blackjack_webapp/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">raw</a>
+  </div>
+</div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">get</span> <span class="s1">&#39;/new_player&#39;</span> <span class="k">do</span>
+  <span class="n">erb</span> <span class="ss">:new_player</span>
+<span class="k">end</span>
+
+<span class="n">post</span> <span class="s1">&#39;/new_player&#39;</span> <span class="k">do</span>
+  <span class="k">if</span> <span class="n">params</span><span class="o">[</span><span class="ss">:player_name</span><span class="o">].</span><span class="n">empty?</span> <span class="o">||</span> <span class="n">params</span><span class="o">[</span><span class="ss">:player_name</span><span class="o">].</span><span class="n">to_i</span> <span class="o">!=</span> <span class="mi">0</span>
+    <span class="vi">@error</span> <span class="o">=</span> <span class="s2">&quot;Please enter your name.&quot;</span>
+    <span class="n">halt</span> <span class="n">erb</span><span class="p">(</span><span class="ss">:new_player</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="n">session</span><span class="o">[</span><span class="ss">:player_name</span><span class="o">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="ss">:player_name</span><span class="o">]</span>
+    <span class="n">session</span><span class="o">[</span><span class="ss">:player_bankroll</span><span class="o">]</span> <span class="o">=</span> <span class="no">INITIAL_PLAYER_BANLROLL</span>
+    <span class="n">redirect</span> <span class="s1">&#39;/bet&#39;</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+<p>The app does not use a database. Instead, the following types of <code>session[:id]</code> (cookies) are used to store persistent data:</p>
+
+<ul>
+  <li><code>[:player_bankroll]</code>: The player’s total amount of money available to bet</li>
+  <li><code>[:player_name]</code>: The player’s name</li>
+  <li><code>[:bet_amount]</code>: The value of the player’s bet</li>
+  <li><code>[:dealer_cards]</code>: The dealer’s hand</li>
+  <li><code>[:player_cards]</code>: The player’s hand</li>
+  <li><code>[:deck]</code>: The deck</li>
+  <li><code>[:turn]</code>: Whose turn it is to hit/stand</li>
+</ul>
+
+<p>When a user vists <a href="https://salty-crag-8411.herokuapp.com/">https://salty-crag-8411.herokuapp.com/</a>, he or she is prompted for a name. This name is stored in <code>session[:player_name]</code>.</p>
+
+<p>Next, the player is prompted for a bet.</p>
+
+<p>The player is taken to “/bet” and the ‘bet.html.erb’ view is rendered:</p>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">This Github Sample</a> is by <a href="https://github.com/XiaoA">XiaoA</a>
+  </div>
+  <div class="meta-info">
+    main.rb <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">view</a> <a href="https://raw.githubusercontent.com/XiaoA/sinatra_blackjack_webapp/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">raw</a>
+  </div>
+</div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">get</span> <span class="s1">&#39;/bet&#39;</span> <span class="k">do</span>
+  <span class="n">erb</span> <span class="ss">:bet</span>
+<span class="k">end</span>
+
+<span class="n">post</span> <span class="s1">&#39;/bet&#39;</span> <span class="k">do</span>
+  <span class="k">if</span> <span class="n">session</span><span class="o">[</span><span class="ss">:player_bankroll</span><span class="o">].</span><span class="n">to_i</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="n">redirect</span> <span class="s1">&#39;/no_money&#39;</span>
+  <span class="k">elsif</span> <span class="n">params</span><span class="o">[</span><span class="ss">:bet_amount</span><span class="o">].</span><span class="n">empty?</span> <span class="o">||</span> <span class="n">params</span><span class="o">[</span><span class="ss">:bet_amount</span><span class="o">].</span><span class="n">to_i</span> <span class="o">==</span> <span class="mi">0</span> 
+    <span class="vi">@error</span> <span class="o">=</span> <span class="s2">&quot;You must place a bet.&quot;</span>
+    <span class="n">halt</span> <span class="n">erb</span><span class="p">(</span><span class="ss">:bet</span><span class="p">)</span>
+  <span class="k">elsif</span> <span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:bet_amount</span><span class="o">].</span><span class="n">to_i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:bet_amount</span><span class="o">].</span><span class="n">to_i</span> <span class="o">&gt;</span> <span class="n">session</span><span class="o">[</span><span class="ss">:player_bankroll</span><span class="o">].</span><span class="n">to_i</span><span class="p">)</span>
+    <span class="vi">@error</span> <span class="o">=</span> <span class="s2">&quot;Your bet must be between $5 and $</span><span class="si">#{</span><span class="n">session</span><span class="o">[</span><span class="ss">:player_bankroll</span><span class="o">]</span><span class="si">}</span><span class="s2">.&quot;</span>
+    <span class="n">halt</span> <span class="n">erb</span><span class="p">(</span><span class="ss">:bet</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="n">session</span><span class="o">[</span><span class="ss">:bet_amount</span><span class="o">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="ss">:bet_amount</span><span class="o">]</span>
+    <span class="n">redirect</span> <span class="s1">&#39;/game&#39;</span>
+  <span class="k">end</span></code></pre></div>
+
+<p>After the player enters a bet amount, a series of checks are performed:</p>
+
+<ol>
+  <li>If the player has no money, the game is redirected to ‘/no_money’ and the game is over.</li>
+  <li>If the player tries to enter anything other than a number, the dealer asks for the player to try again.</li>
+  <li>If the bet is less than the minimum ($5), or more than the player’s total bankroll, the player is asked to bet again.</li>
+  <li>If the bet is valid, the bet amount is saved as <code>session[:bet_amount]</code>, and the player is directed to the ‘/game’ route.</li>
+</ol>
+
+<p>In the <code>'/game'</code> route, the cards are shuffled and dealt.</p>
+
+<ul>
+  <li>If the player has 21, it’s a Blackjack.</li>
+  <li>If the player’s cards total more than 21, it’s a bust.</li>
+  <li>Oherwise the player is offered the chance to hit or stand.</li>
+</ul>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">This Github Sample</a> is by <a href="https://github.com/XiaoA">XiaoA</a>
+  </div>
+  <div class="meta-info">
+    main.rb <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">view</a> <a href="https://raw.githubusercontent.com/XiaoA/sinatra_blackjack_webapp/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">raw</a>
+  </div>
+</div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">get</span> <span class="s1">&#39;/game&#39;</span> <span class="k">do</span>
+  <span class="n">session</span><span class="o">[</span><span class="ss">:turn</span><span class="o">]</span> <span class="o">=</span> <span class="n">session</span><span class="o">[</span><span class="ss">:player_name</span><span class="o">]</span>
+  
+  <span class="c1"># create a deck and put it in session</span>
+
+  <span class="n">suits</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="o">]</span>
+  <span class="n">values</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="s2">&quot;9&quot;</span><span class="p">,</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span> <span class="s2">&quot;J&quot;</span><span class="p">,</span> <span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="o">]</span>
+  <span class="n">session</span><span class="o">[</span><span class="ss">:deck</span><span class="o">]</span> <span class="o">=</span> <span class="n">suits</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">shuffle!</span>
+  
+  <span class="c1"># deal cards</span>
+  <span class="n">session</span><span class="o">[</span><span class="ss">:dealer_cards</span><span class="o">]</span> <span class="o">=</span> <span class="o">[]</span>
+  <span class="n">session</span><span class="o">[</span><span class="ss">:player_cards</span><span class="o">]</span> <span class="o">=</span> <span class="o">[]</span>
+  <span class="n">session</span><span class="o">[</span><span class="ss">:dealer_cards</span><span class="o">]</span> <span class="o">&lt;&lt;</span> <span class="n">session</span><span class="o">[</span><span class="ss">:deck</span><span class="o">].</span><span class="n">pop</span>
+  <span class="n">session</span><span class="o">[</span><span class="ss">:player_cards</span><span class="o">]</span> <span class="o">&lt;&lt;</span> <span class="n">session</span><span class="o">[</span><span class="ss">:deck</span><span class="o">].</span><span class="n">pop</span>
+  <span class="n">session</span><span class="o">[</span><span class="ss">:dealer_cards</span><span class="o">]</span> <span class="o">&lt;&lt;</span> <span class="n">session</span><span class="o">[</span><span class="ss">:deck</span><span class="o">].</span><span class="n">pop</span>
+  <span class="n">session</span><span class="o">[</span><span class="ss">:player_cards</span><span class="o">]</span> <span class="o">&lt;&lt;</span> <span class="n">session</span><span class="o">[</span><span class="ss">:deck</span><span class="o">].</span><span class="n">pop</span>
+
+
+  <span class="n">player_total</span> <span class="o">=</span> <span class="n">calculate_total</span><span class="p">(</span><span class="n">session</span><span class="o">[</span><span class="ss">:player_cards</span><span class="o">]</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">player_total</span> <span class="o">==</span> <span class="no">BLACKJACK_AMOUNT</span>
+    <span class="n">winner!</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">session</span><span class="o">[</span><span class="ss">:player_name</span><span class="o">]</span><span class="si">}</span><span class="s2"> hit Blackjack!&quot;</span><span class="p">)</span>
+  <span class="k">elsif</span> <span class="n">player_total</span> <span class="o">&gt;</span> <span class="no">BLACKJACK_AMOUNT</span>
+    <span class="n">loser!</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">session</span><span class="o">[</span><span class="ss">:player_name</span><span class="o">]</span><span class="si">}</span><span class="s2"> busted at </span><span class="si">#{</span><span class="n">player_total</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+  <span class="k">end</span>
+  
+  <span class="n">erb</span> <span class="ss">:game</span>
+<span class="k">end</span></code></pre></div>
+
+<h2 id="the-players-turn">The Player’s Turn</h2>
+<p>If the player chooses to hit, he/she is redirected to <code>/game/player/hit</code>.  </p>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">This Github Sample</a> is by <a href="https://github.com/XiaoA">XiaoA</a>
+  </div>
+  <div class="meta-info">
+    main.rb <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">view</a> <a href="https://raw.githubusercontent.com/XiaoA/sinatra_blackjack_webapp/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">raw</a>
+  </div>
+</div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">post</span> <span class="s1">&#39;/game/player/hit&#39;</span> <span class="k">do</span>
+  <span class="n">session</span><span class="o">[</span><span class="ss">:player_cards</span><span class="o">]</span> <span class="o">&lt;&lt;</span> <span class="n">session</span><span class="o">[</span><span class="ss">:deck</span><span class="o">].</span><span class="n">pop</span>
+
+  <span class="n">player_total</span> <span class="o">=</span> <span class="n">calculate_total</span><span class="p">(</span><span class="n">session</span><span class="o">[</span><span class="ss">:player_cards</span><span class="o">]</span><span class="p">)</span>
+  
+  <span class="k">if</span> <span class="n">player_total</span> <span class="o">==</span> <span class="no">BLACKJACK_AMOUNT</span>
+    <span class="n">winner!</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">session</span><span class="o">[</span><span class="ss">:player_name</span><span class="o">]</span><span class="si">}</span><span class="s2"> hit Blackjack!&quot;</span><span class="p">)</span>
+  <span class="k">elsif</span> <span class="n">player_total</span> <span class="o">&gt;</span> <span class="no">BLACKJACK_AMOUNT</span>
+    <span class="n">loser!</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">session</span><span class="o">[</span><span class="ss">:player_name</span><span class="o">]</span><span class="si">}</span><span class="s2"> busted at </span><span class="si">#{</span><span class="n">player_total</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="n">erb</span> <span class="ss">:game</span><span class="p">,</span> <span class="ss">layout</span><span class="p">:</span> <span class="kp">false</span>
+<span class="k">end</span></code></pre></div>
+
+<p>If the player chooses to stand, he/she is redirected to <code>/game/player/stand</code>.  </p>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">This Github Sample</a> is by <a href="https://github.com/XiaoA">XiaoA</a>
+  </div>
+  <div class="meta-info">
+    main.rb <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">view</a> <a href="https://raw.githubusercontent.com/XiaoA/sinatra_blackjack_webapp/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">raw</a>
+  </div>
+</div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">post</span> <span class="s1">&#39;/game/player/stand&#39;</span> <span class="k">do</span>
+  <span class="vi">@success</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">session</span><span class="o">[</span><span class="ss">:player_name</span><span class="o">]</span><span class="si">}</span><span class="s2"> stands.&quot;</span>
+  <span class="vi">@show_hit_or_stand_buttons</span> <span class="o">=</span> <span class="kp">false</span>
+  <span class="n">redirect</span> <span class="s1">&#39;/game/dealer&#39;</span>
+<span class="k">end</span></code></pre></div>
+
+<h2 id="the-dealers-turn">The Dealer’s Turn</h2>
+<p>Now, it’s the dealer’s turn. The dealer must hit until he/she has at least 17. We can use a constant, <code>DEALER_MINIMUM_HIT_AMOUNT</code>, to represent this requirement.</p>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">This Github Sample</a> is by <a href="https://github.com/XiaoA">XiaoA</a>
+  </div>
+  <div class="meta-info">
+    main.rb <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">view</a> <a href="https://raw.githubusercontent.com/XiaoA/sinatra_blackjack_webapp/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">raw</a>
+  </div>
+</div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">get</span> <span class="s1">&#39;/game/dealer&#39;</span> <span class="k">do</span>
+  <span class="n">session</span><span class="o">[</span><span class="ss">:turn</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;dealer&quot;</span>
+  <span class="vi">@show_hit_or_stand_buttons</span> <span class="o">=</span> <span class="kp">false</span>
+
+  <span class="n">dealer_total</span> <span class="o">=</span> <span class="n">calculate_total</span><span class="p">(</span><span class="n">session</span><span class="o">[</span><span class="ss">:dealer_cards</span><span class="o">]</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">dealer_total</span> <span class="o">==</span> <span class="no">BLACKJACK_AMOUNT</span>
+    <span class="n">loser!</span><span class="p">(</span><span class="s2">&quot;Dealer hit Blackjack.&quot;</span><span class="p">)</span>
+  <span class="k">elsif</span> <span class="n">dealer_total</span> <span class="o">&gt;</span> <span class="no">BLACKJACK_AMOUNT</span>
+    <span class="n">winner!</span><span class="p">(</span><span class="s2">&quot;Dealer busted at </span><span class="si">#{</span><span class="n">dealer_total</span><span class="si">}</span><span class="s2"> .&quot;</span><span class="p">)</span>
+  <span class="k">elsif</span> <span class="n">dealer_total</span> <span class="o">&gt;=</span> <span class="no">DEALER_MINIMUM_HIT_AMOUNT</span>
+    <span class="n">redirect</span> <span class="s1">&#39;/game/compare&#39;</span>
+  <span class="k">else</span>
+    <span class="vi">@show_dealer_hit_button</span> <span class="o">=</span> <span class="kp">true</span>
+  <span class="k">end</span>
+
+  <span class="n">erb</span> <span class="ss">:game</span><span class="p">,</span> <span class="ss">layout</span><span class="p">:</span> <span class="kp">false</span>
+<span class="k">end</span></code></pre></div>
+
+<p>Until the dealer reaches at least 17, he/she must hit:</p>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">This Github Sample</a> is by <a href="https://github.com/XiaoA">XiaoA</a>
+  </div>
+  <div class="meta-info">
+    main.rb <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">view</a> <a href="https://raw.githubusercontent.com/XiaoA/sinatra_blackjack_webapp/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">raw</a>
+  </div>
+</div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">post</span> <span class="s1">&#39;/game/dealer/hit&#39;</span> <span class="k">do</span>
+  <span class="n">session</span><span class="o">[</span><span class="ss">:dealer_cards</span><span class="o">]</span> <span class="o">&lt;&lt;</span> <span class="n">session</span><span class="o">[</span><span class="ss">:deck</span><span class="o">].</span><span class="n">pop</span>
+  <span class="n">redirect</span> <span class="s1">&#39;/game/dealer&#39;</span>
+<span class="k">end</span></code></pre></div>
+
+<h2 id="choosing-a-winner">Choosing a Winner</h2>
+<p>Finally, if neither the player nor the dealer have hit Blackjack or busted, we need a way to compare the values of their hands, and declare a winner:</p>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">This Github Sample</a> is by <a href="https://github.com/XiaoA">XiaoA</a>
+  </div>
+  <div class="meta-info">
+    main.rb <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">view</a> <a href="https://raw.githubusercontent.com/XiaoA/sinatra_blackjack_webapp/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">raw</a>
+  </div>
+</div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">get</span> <span class="s1">&#39;/game/compare&#39;</span> <span class="k">do</span>
+  <span class="vi">@show_hit_or_stand_buttons</span> <span class="o">=</span> <span class="kp">false</span>
+
+  <span class="n">player_total</span> <span class="o">=</span> <span class="n">calculate_total</span><span class="p">(</span><span class="n">session</span><span class="o">[</span><span class="ss">:player_cards</span><span class="o">]</span><span class="p">)</span>
+  <span class="n">dealer_total</span> <span class="o">=</span> <span class="n">calculate_total</span><span class="p">(</span><span class="n">session</span><span class="o">[</span><span class="ss">:dealer_cards</span><span class="o">]</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">player_total</span> <span class="o">&lt;</span> <span class="n">dealer_total</span>
+    <span class="n">loser!</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">session</span><span class="o">[</span><span class="ss">:player_name</span><span class="o">]</span><span class="si">}</span><span class="s2"> stands at </span><span class="si">#{</span><span class="n">player_total</span><span class="si">}</span><span class="s2">, and the dealer stands at </span><span class="si">#{</span><span class="n">dealer_total</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+  <span class="k">elsif</span> <span class="n">player_total</span> <span class="o">&gt;</span> <span class="n">dealer_total</span>
+    <span class="n">winner!</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">session</span><span class="o">[</span><span class="ss">:player_name</span><span class="o">]</span><span class="si">}</span><span class="s2"> stands at </span><span class="si">#{</span><span class="n">player_total</span><span class="si">}</span><span class="s2">, and the dealer stands at </span><span class="si">#{</span><span class="n">dealer_total</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="n">tie!</span><span class="p">(</span><span class="s2">&quot;Both </span><span class="si">#{</span><span class="n">session</span><span class="o">[</span><span class="ss">:player_name</span><span class="o">]</span><span class="si">}</span><span class="s2"> and the dealer stand at </span><span class="si">#{</span><span class="n">player_total</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="n">erb</span> <span class="ss">:game</span><span class="p">,</span> <span class="ss">layout</span><span class="p">:</span> <span class="kp">false</span>
+<span class="k">end</span></code></pre></div>
+
+<h2 id="ending-the-game">Ending the Game</h2>
+
+<p>At the end of each match, the player is routed back to the beginning, where he/she is free to place a new bet or quit. There are two scenarios where he game must end:</p>
+
+<ol>
+  <li>The player has money, but leaves the table</li>
+  <li>The player is out of money</li>
+</ol>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">This Github Sample</a> is by <a href="https://github.com/XiaoA">XiaoA</a>
+  </div>
+  <div class="meta-info">
+    main.rb <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">view</a> <a href="https://raw.githubusercontent.com/XiaoA/sinatra_blackjack_webapp/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb">raw</a>
+  </div>
+</div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">get</span> <span class="s1">&#39;/no_money&#39;</span> <span class="k">do</span>
+  <span class="n">erb</span> <span class="ss">:no_money</span>
+<span class="k">end</span>
+
+<span class="n">get</span> <span class="s1">&#39;/game_over&#39;</span> <span class="k">do</span>
+  <span class="n">erb</span> <span class="ss">:game_over</span>
+<span class="k">end</span></code></pre></div>
+
+<p>Both of these scenarios can be handled very easily with the appropriate views:</p>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/ff0ec7cb44644e8a434c3c106675048098dbd4ae/views/no_money.erb">This Github Sample</a> is by <a href="https://github.com/XiaoA">XiaoA</a>
+  </div>
+  <div class="meta-info">
+    views/no_money.erb <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/ff0ec7cb44644e8a434c3c106675048098dbd4ae/views/no_money.erb">view</a> <a href="https://raw.githubusercontent.com/XiaoA/sinatra_blackjack_webapp/ff0ec7cb44644e8a434c3c106675048098dbd4ae/views/no_money.erb">raw</a>
+  </div>
+</div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="n">h3</span><span class="o">&gt;</span><span class="no">Thanks</span> <span class="k">for</span> <span class="n">playing!</span><span class="o">&lt;</span><span class="sr">/h3&gt;</span>
+<span class="sr">&lt;p&gt;Sorry, &lt;%= session[:player_name] %&gt;. You have &lt;span class=&quot;game_over_bankroll_amount&quot;&gt;$&lt;%= session[:player_bankroll] %&gt;&lt;/s</span><span class="n">pan</span><span class="o">&gt;</span><span class="p">,</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">minimum</span> <span class="n">bet</span> <span class="n">is</span> <span class="vg">$5</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">If</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="n">try</span> <span class="n">your</span> <span class="n">luck</span> <span class="n">again</span><span class="p">,</span> <span class="n">please</span> <span class="n">see</span> <span class="n">the</span> <span class="no">Cashier</span> <span class="k">for</span> <span class="n">more</span> <span class="n">chips</span> <span class="n">first</span><span class="o">.</span><span class="n">&lt;</span><span class="sr">/p&gt;</span>
+<span class="sr">&lt;br /</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;btn btn-info btn-large&quot;</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;/new_player&quot;</span><span class="o">&gt;&lt;</span><span class="n">i</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;icon-user&quot;</span><span class="o">&gt;&lt;</span><span class="sr">/i&gt; Start Over&lt;/</span><span class="n">a</span><span class="o">&gt;</span></code></pre></div>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/74ab3203e11c95eca5d2523cc517ba77c2e724d6/views/game_over.erb">This Github Sample</a> is by <a href="https://github.com/XiaoA">XiaoA</a>
+  </div>
+  <div class="meta-info">
+    views/game_over.erb <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/74ab3203e11c95eca5d2523cc517ba77c2e724d6/views/game_over.erb">view</a> <a href="https://raw.githubusercontent.com/XiaoA/sinatra_blackjack_webapp/74ab3203e11c95eca5d2523cc517ba77c2e724d6/views/game_over.erb">raw</a>
+  </div>
+</div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="n">h3</span><span class="o">&gt;</span><span class="no">Thanks</span> <span class="k">for</span> <span class="n">playing!</span><span class="o">&lt;</span><span class="sr">/h3&gt;</span>
+<span class="sr">&lt;h4&gt;You&#39;re walking away with &lt;span class=&quot;game_over_bankroll_amount&quot;&gt; $&lt;%= session[:player_bankroll] %&gt;&lt;/s</span><span class="n">pan</span><span class="o">&gt;.</span> <span class="no">Looks</span> <span class="n">like</span> <span class="n">you</span><span class="s1">&#39;re ready to hit Vegas!&lt;/h4&gt;</span>
+<span class="s1">&lt;p&gt;(Unless you&#39;</span><span class="n">ve</span> <span class="n">changed</span> <span class="n">your</span> <span class="n">mind</span><span class="p">,</span> <span class="k">in</span> <span class="n">which</span> <span class="k">case</span> <span class="n">you</span> <span class="n">might</span> <span class="n">want</span> <span class="n">to</span> <span class="n">keep</span> <span class="n">playing</span><span class="p">)</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="sc">?&lt;</span><span class="sr">/p&gt;</span>
+<span class="sr">&lt;br /</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;btn btn-info btn-large&quot;</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;/bet&quot;</span><span class="o">&gt;&lt;</span><span class="n">i</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;icon-user&quot;</span><span class="o">&gt;&lt;</span><span class="sr">/i&gt; Keep Playing&lt;/</span><span class="n">a</span><span class="o">&gt;</span></code></pre></div>
+
+<h2 id="ajax">Ajax!</h2>
+
+<p>One cool bonus, which you should notice as you play the game, is that the entire page does not reload with each action. The application includes jQuery code to prevent all but essential reloads for the following game actions:</p>
+
+<ul>
+  <li>when the player hits</li>
+  <li>when the player stands</li>
+  <li>when the dealer hits</li>
+</ul>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/67cece1a535da0f85af11c96456d4a477a7bed3c/public/application.js">This Github Sample</a> is by <a href="https://github.com/XiaoA">XiaoA</a>
+  </div>
+  <div class="meta-info">
+    public/application.js <a href="https://github.com/XiaoA/sinatra_blackjack_webapp/blob/67cece1a535da0f85af11c96456d4a477a7bed3c/public/application.js">view</a> <a href="https://raw.githubusercontent.com/XiaoA/sinatra_blackjack_webapp/67cece1a535da0f85af11c96456d4a477a7bed3c/public/application.js">raw</a>
+  </div>
+</div>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span><span class="p">(</span><span class="n">document</span><span class="p">)</span><span class="o">.</span><span class="n">ready</span><span class="p">(</span><span class="n">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">player_hits</span><span class="p">();</span>
+    <span class="n">player_stands</span><span class="p">();</span>
+    <span class="n">dealer_hits</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="n">function</span> <span class="n">player_hits</span><span class="p">()</span> <span class="p">{</span>
+    <span class="err">$</span><span class="p">(</span><span class="n">document</span><span class="p">)</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="s2">&quot;form#hit_form input&quot;</span><span class="p">,</span> <span class="n">function</span><span class="p">(){</span>
+	<span class="vg">$.</span><span class="n">ajax</span><span class="p">({</span>
+	    <span class="ss">type</span><span class="p">:</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+	    <span class="ss">url</span><span class="p">:</span> <span class="s2">&quot;/game/player/hit&quot;</span>
+	<span class="p">})</span><span class="o">.</span><span class="n">done</span><span class="p">(</span><span class="n">function</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="err">$</span><span class="p">(</span><span class="s1">&#39;#game&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replaceWith</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+	<span class="p">});</span>
+
+	<span class="k">return</span> <span class="kp">false</span><span class="p">;</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="n">function</span> <span class="n">player_stands</span><span class="p">()</span> <span class="p">{</span>
+    <span class="err">$</span><span class="p">(</span><span class="n">document</span><span class="p">)</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="s2">&quot;form#stand_form input&quot;</span><span class="p">,</span> <span class="n">function</span><span class="p">(){</span>
+	<span class="vg">$.</span><span class="n">ajax</span><span class="p">({</span>
+	    <span class="ss">type</span><span class="p">:</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+	    <span class="ss">url</span><span class="p">:</span> <span class="s2">&quot;/game/player/stand&quot;</span>
+	<span class="p">})</span><span class="o">.</span><span class="n">done</span><span class="p">(</span><span class="n">function</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="err">$</span><span class="p">(</span><span class="s1">&#39;#game&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replaceWith</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+	<span class="p">});</span>
+
+	<span class="k">return</span> <span class="kp">false</span><span class="p">;</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="n">function</span> <span class="n">dealer_hits</span><span class="p">()</span> <span class="p">{</span>
+    <span class="err">$</span><span class="p">(</span><span class="n">document</span><span class="p">)</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="s2">&quot;form#dealer_hit input&quot;</span><span class="p">,</span> <span class="n">function</span><span class="p">(){</span>
+	<span class="vg">$.</span><span class="n">ajax</span><span class="p">({</span>
+	    <span class="ss">type</span><span class="p">:</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+	    <span class="ss">url</span><span class="p">:</span> <span class="s2">&quot;/game/dealer/hit&quot;</span>
+	<span class="p">})</span><span class="o">.</span><span class="n">done</span><span class="p">(</span><span class="n">function</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="err">$</span><span class="p">(</span><span class="s1">&#39;#game&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replaceWith</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+	<span class="p">});</span>
+
+	<span class="k">return</span> <span class="kp">false</span><span class="p">;</span>
+    <span class="p">});</span>
+<span class="p">};</span></code></pre></div>
+
+<p>This provides for a smoother user experience, and it saves some bandwidth. I hope you’ve enjoyed this tour of my first Sinatra web app. I had a lot fun building it.</p>
+
+
+	  <br>
+	  <p id="subscribe-invite" class="well well-sm">If you enjoyed this post, you might want to <a href="http://andrewbuckingham.net/blog/feed.atom">subscribe</a>, so you don't miss the next one!</p>
+	</div>
+	<hr />
+
+	<div class="related">
+	  <h2>Related Posts</h2>
+	  <ul class="related-posts">
+	    
+	    <li>
+	      <h3>
+		<a href="/blog/2015/07/17/kcruby-emacs-demo">
+		  KCRuby Emacs Demo
+		  <small>Jul 17, 2015</small>
+		</a>
+	      </h3>
+	    </li>
+	    
+	    <li>
+	      <h3>
+		<a href="/blog/2015/07/13/A-Simple-Way-to-Implement-Case-Insensitive-Searches-in-Rails">
+		  A Simple Way to Implement Case-Insensitive Searches in Rails
+		  <small>Jul 13, 2015</small>
+		</a>
+	      </h3>
+	    </li>
+	    
+	    <li>
+	      <h3>
+		<a href="/blog/2015/06/20/Positit!">
+		  Positit!
+		  <small>Jun 20, 2015</small>
+		</a>
+	      </h3>
+	    </li>
+	    
+	  </ul>
+	</div>
+	<hr>
+	
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>    
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<!-- <script src="js/bootstrap.min.js"></script> -->
+	<script>
+	 $(".contentContainer").css("min-height",$(window).height());
+	</script>
+      </div>
+    </div>
+  </body>
+</html>

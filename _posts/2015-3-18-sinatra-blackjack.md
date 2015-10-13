@@ -23,6 +23,7 @@ In my [Sinatra Blackjack game][git], these routes help control the flow of the B
 ## Game Start
 Sinatra serves the '/' (root) route, and evaluates the conditional in the `'do'` block:
 
+
 {% github_sample_ref /XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb %}
 {% highlight ruby %}
 {% github_sample /XiaoA/sinatra_blackjack_webapp/blob/305a73dfb31c31ad088a2040233eaca6ba6fe62a/main.rb 85 91 %}

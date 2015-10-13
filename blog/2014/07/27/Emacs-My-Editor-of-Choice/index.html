@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Emacs, My Editor of Choice</title>
+    <meta name="description" content="Web development and technology site">
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-65293559-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    
+    <!-- Bootstrap CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- Font Awesome CDN -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    <link rel="stylesheet" href="/assets/css/syntax.css">
+    <link rel="canonical" href="http://andrewbuckingham.net/blog/2014/07/27/Emacs-My-Editor-of-Choice/">
+  </head>
+
+  <body data-spy="scroll" data-target:".navbar-collapse">
+
+    <!-- Start Navbar -->
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header">
+	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-3">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+	  </button>
+	  <a class="navbar-brand" href="/">Andrew Buckingham</a>
+	</div>
+
+	<!-- Collect the nav links, forms, and other content for toggling -->
+	<div class="collapse navbar-collapse" id="navbar-collapse-3">
+	  <ul class="nav navbar-nav navbar-right">
+            <li><a href="/#home">Home</a></li>
+            <li><a href="/#about">About</a></li>
+	    <li><a href="/#contact">Contact</a></li>
+      	    <li><a href="/#projects">Projects</a></li>
+	    <li class="active"><a href="/blog/">Blog</a></li>
+          </ul>
+	</div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+      <div class="col-md-8 col-md-offset-2 marginTop">
+	<div class="tagline">
+	  Looking for more to read? Check out the <a href="/blog/archives">Archives</a>!
+	</div>
+	<div class="post">
+	  <h1 class="post-title">Emacs, My Editor of Choice</h1>
+	  <div class="meta_wrapper">
+	    <ul class="post-meta">
+	      <span class="post-date"><li>Jul 27, 2014
+	      </li></span>
+	      <span class="post-tags"><li>Tags: <a href="/tag/editors"> editors </a> <a href="/tag/emacs"> emacs </a> <a href="/tag/vim"> vim </a>  </li></span>
+	    </ul>	
+	  </div>
+	  <p>These days, I hear a lot about <a href="http://www.sublimetext.com/">Sublime Text</a>, the cool new text editor on the block. I’ve tried it, and it’s OK, but I use <a href="http://www.gnu.org/software/emacs/">Emacs</a>, and I honestly don’t see any reason to switch. I used to use <a href="http://www.vim.org">Vim</a><sup id="fnref:vim"><a href="#fn:vim" class="footnote">1</a></sup>, but I switched to Emacs back in 2010, largely because of <a href="http://orgmode.org">org-mode</a>.</p>
+
+<p>Most people I know don’t care about text editors, but if you spend any amount of time coding, you’ll definitely want to try out different editors and IDEs, to see what works best for you. And you should choose whatever tools you like, and not worry about what other people use.</p>
+
+<p>We’re really lucky that we live in a time when there are so many great choices. For me, there’s no contest. Emacs wins, hands down. But I understand that it’s not the right choice for everyone.</p>
+
+<!-- more -->
+
+<p>Arguments over which editor is best are tired and boring. One of my employees is just staring out in Computer Science, and I recommended that he first consider Vim or Emacs, because they are powerful, free, and they will always be around, as long as computers have keyboards. A few years ago, a lot of people I respect used TextMate. Now, many of them rave about Sublime Text. Ultimately, it doesn’t matter what tool you use. But it is a good idea to consider that the tool you use will require a lot of time and energy to learn to use well. And hopefully, you can customize it to your needs. And when it comes to customizability, no editor can match Vim or Emacs (especially Emacs!). While Sublime might be actively developed in another five or ten years, there’s no doubt in my mind that Vim and Emacs will. Plus, if he doesn’t like either of them, he can always try something else. This <a href="http://en.wikipedia.org/wiki/Comparison_of_text_editors">text editor comparison chart on Wikipedia</a> is a great place to start.</p>
+
+<p>I gave him a few links to learn about Vim and Emacs. I thought I’d list them here, in case they’re helpful for anyone else.</p>
+
+<h2 id="vim">Vim</h2>
+<p>Download: <a href="www.vim.org">www.vim.org</a> (try vimtutor inside vim)</p>
+
+<h3 id="videos">Videos</h3>
+<ul>
+  <li><a href="http://derekwyatt.org/">http://derekwyatt.org/</a>:  Funny, quirky guy, with lots of great demos and tutorial. He really knows Vim!</li>
+  <li><a href="https://www.youtube.com/watch?v=MGmIJyTf8pg">https://www.youtube.com/watch?v=MGmIJyTf8pg</a>: Tim Pope has made a lot of good plugins</li>
+  <li><a href="https://www.youtube.com/watch?v=p6K4iIMlouI">https://www.youtube.com/watch?v=p6K4iIMlouI</a>: Great talk about efficient text editing, by the guy who ported the old Vi editor to Vim.</li>
+</ul>
+
+<h3 id="blog-article">Blog Article</h3>
+<ul>
+  <li><a href="http://csswizardry.com/2014/06/vim-for-people-who-think-things-like-vim-are-weird-and-hard/">http://csswizardry.com/2014/06/vim-for-people-who-think-things-like-vim-are-weird-and-hard/</a></li>
+</ul>
+
+<h2 id="emacs">Emacs</h2>
+<ul>
+  <li>Download: <a href="http://www.gnu.org/software/emacs/">http://www.gnu.org/software/emacs/</a> (try the tutorial inside emacs)</li>
+  <li><a href="http://www.gnu.org/doc/doc.html">http://www.gnu.org/doc/doc.html</a> emacs help (also in emacs itself)</li>
+  <li><a href="http://www.emacswiki.org/emacs/">http://www.emacswiki.org/emacs/</a> probably the best place to go for emacs help, other than in the emacs help docs</li>
+</ul>
+
+<h3 id="videos-1">Videos</h3>
+<ul>
+  <li><a href="http://emacsrocks.com/">http://emacsrocks.com/</a> A really, really enthusiastic emacs user. These are short videos that show his little discoveries and customizations. He’s put out several good packages, like <a href="https://github.com/magnars/multiple-cursors.el">multiple cursors</a>, which is an Emacs equivalent to one of the most popular Sublime Text features.</li>
+  <li><a href="https://www.youtube.com/user/rpdillon">https://www.youtube.com/user/rpdillon</a> These are good intro videos.</li>
+  <li><a href="http://orgmode.org">http://orgmode.org</a> Many people convert to Emacs just for this. I did.</li>
+  <li><a href="http://vimeo.com/timvisher/videos">http://vimeo.com/timvisher/videos</a> There’s something called Vimgolf, where Vim Users try to do tasks with as few keystrokes as possible. This guy uses Emacs, and he does the same challenges in Emacs. More for learning new features and inspiration than a tutorial for new users. </li>
+</ul>
+
+<p>There are a few starter kits for Emacs, which set more “sensible” defaults for new Emacs users. I’ve used some of these in the past. I especially like <a href="https://github.com/bbatsov/prelude">Prelude</a>. But after a while, I found it was easier to start over, and either create or “borrow” what I needed. The Emacs community is very friendly and generous. If you have a problem or need help, and can’t find an answer within the extensive documentation built into Emacs, check the links I’ve provided above, or do a quick Google search. The chances are, you’ll find at least one solution to your problem, if not several.</p>
+
+<p>Here’s a link to my ever-changing Emacs configuration files: <a href="https://github.com/XiaoA/.emacs.d">https://github.com/XiaoA/.emacs.d</a>. If you have a question or problem, let me know. Maybe I’ll be able to help.</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:vim">
+      <p>In fact, I still use it at work, when I log in to the linux servers. Vi/Vim should always be installed on any *nix server, so it’s always good to know how to get around. With just a few memorized commands, you can edit effectively in Vim. <a href="#fnref:vim" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+	  <br>
+	  <p id="subscribe-invite" class="well well-sm">If you enjoyed this post, you might want to <a href="http://andrewbuckingham.net/blog/feed.atom">subscribe</a>, so you don't miss the next one!</p>
+	</div>
+	<hr />
+
+	<div class="related">
+	  <h2>Related Posts</h2>
+	  <ul class="related-posts">
+	    
+	    <li>
+	      <h3>
+		<a href="/blog/2015/07/17/kcruby-emacs-demo">
+		  KCRuby Emacs Demo
+		  <small>Jul 17, 2015</small>
+		</a>
+	      </h3>
+	    </li>
+	    
+	    <li>
+	      <h3>
+		<a href="/blog/2015/07/13/A-Simple-Way-to-Implement-Case-Insensitive-Searches-in-Rails">
+		  A Simple Way to Implement Case-Insensitive Searches in Rails
+		  <small>Jul 13, 2015</small>
+		</a>
+	      </h3>
+	    </li>
+	    
+	    <li>
+	      <h3>
+		<a href="/blog/2015/06/20/Positit!">
+		  Positit!
+		  <small>Jun 20, 2015</small>
+		</a>
+	      </h3>
+	    </li>
+	    
+	  </ul>
+	</div>
+	<hr>
+	
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>    
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<!-- <script src="js/bootstrap.min.js"></script> -->
+	<script>
+	 $(".contentContainer").css("min-height",$(window).height());
+	</script>
+      </div>
+    </div>
+  </body>
+</html>
