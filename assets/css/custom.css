@@ -380,3 +380,6 @@ ul.related-posts h3 {
 article.markdown-body.entry-content {
     margin: 0 30px 0 30px;
 }
+.glyphicon-arrow-left {
+    margin-right: 10px;
+}
