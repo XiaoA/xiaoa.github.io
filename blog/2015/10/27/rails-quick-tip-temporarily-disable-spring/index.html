@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Thoughts on PHP</title>
+    <title>Rails Quick Tip: Temporarily Disable Spring</title>
     <meta name="description" content="Web development and technology site">
 
     <!-- Google Analytics -->
@@ -30,7 +30,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/assets/css/custom.css">
     <link rel="stylesheet" href="/assets/css/syntax.css">
-    <link rel="canonical" href="http://andrewbuckingham.net/blog/2015/10/21/thoughts-on-php">
+    <link rel="canonical" href="http://andrewbuckingham.net/blog/2015/10/27/rails-quick-tip-temporarily-disable-spring">
   </head>
 
   <body data-spy="scroll" data-target:".navbar-collapse">
@@ -70,36 +70,46 @@
 
         <div class="post">
           <h1 class="post-title">
-            Thoughts on PHP
+            Rails Quick Tip: Temporarily Disable Spring
           </h1>
 	  <div class="meta_wrapper">
 	    <ul class="post-meta">
-	      <span class="post-date"><li>Oct 21, 2015
+	      <span class="post-date"><li>Oct 27, 2015
 	      </li></span>
-	      <span class="post-tags"><li>Tags: <a href="/tag/code"> code </a> <a href="/tag/php"> php </a>  </li></span>
+	      <span class="post-tags"><li>Tags: <a href="/tag/rails"> rails </a> <a href="/tag/code"> code </a> <a href="/tag/quick tip"> quick tip </a>  </li></span>
 	    </ul>
 	  </div>
-	  <p>I left Seattle, for Japan, on September 4, 2003. Almost 12 years year, my wife and I returned, back in August. A lot has changed here in those years, but it’s been a pretty comfortable process. Not long after I got here, I jumped into a project, helping an old friend, with a legacy web application that was part .NET (.aspx), part PHP 5, and part WordPress. It was quite a challenge. She’d worked with several developers, and the project had stalled out. I helped her get the project back on track, fixed some issues, documented all of the files and functions in the code, and helped her interview and hire a competent development team.</p>
+	  <p>Here’s a quick Ruby on Rails development tip. Last night, after setting up Bcrypt for a project, I got a strange error when I ran my test suite:</p>
+
+<p><code>
+22:57:29 - INFO - Running all specs
+You don't have bcrypt installed in your application. Please add it to your Gemfile and run bundle install
+</code>
+<a data-flickr-embed="true" href="https://www.flickr.com/photos/abuckingham/21900626603/in/dateposted/" title="failing-test-10262015"><img src="https://farm6.staticflickr.com/5770/21900626603_215559aab7_o.png" width="676" height="292" alt="failing-test-10262015" class="img-responsive" /></a><script async="" src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script></p>
 
 <!-- more -->
-
-<p>I spend so much time writing code, so it was valuable to work on reading and figuring out legacy code. I’ve done some work with .NET and PHP sites, but they’re not really my specialty. Working with Ruby is a joy, but there are a couple things I do like about PHP:</p>
-
-<ul>
-  <li>It’s fairly ubiquitous; you can write the same code and deploy it on both Linux and Windows servers.</li>
-  <li>You can easily add a little PHP to a site, and add dynamic features.</li>
-</ul>
-
-<p>However, I think that because it’s so easy to sprinkle PHP into your code, it’s easy to end up with a mess, like my friend’s site. Fortunately, it looks like PHP offers some great tools for incorporating TDD into projects. For example:</p>
+<p>The strange thing was that I knew I’d installed it. I tried all of the things that I could think of, including:</p>
 
 <ul>
-  <li><a href="http://www.simpletest.org/">Simple Test</a></li>
-  <li><a href="https://phpunit.de/">PHPUnit</a></li>
-  <li><a href="https://laracasts.com/lessons/tdd-by-example">Laracasts: TDD by Example</a></li>
-  <li><a href="http://code.tutsplus.com/tutorials/laravel-bdd-and-you-lets-get-started--cms-22155">Laravel, BDD, and You</a></li>
+  <li>Checking the Gemfile, Gemfile.lock, and running Bundler</li>
+  <li>Restarting the Rails server</li>
+  <li>Uninstalling and Reinstalling the Bcrypt gem</li>
+  <li>Checking the Active Support and Active Model files, to make sure the dependencies were correct (i.e., ‘bcrypt’ and not ‘bcrypt-rails’), and comparing them to the installed versions listed in my Gemfile and Gemfile.lock files</li>
 </ul>
 
-<p>I’m back to working on my own projects and development. But it was nice to get a little exposure to PHP, and to joining a more mature project. It might be intersting to compare PHP frameworks, like <a href="https://www.codeigniter.com/">Codeigniter</a> or <a href="http://laravel.com/">Laravel</a> to Rails at some point. For now, I am back to working on improving my Rails projects, and looking for a gig here in Seattle. <img class="emoji" title="wink" alt="wink" src="https://github.global.ssl.fastly.net/images/icons/emoji/wink.png" height="20" width="20" align="absmiddle" /></p>
+<p>Finally, I came across <a href="http://stackoverflow.com/questions/26553696/bcrypt-loaderror-cannot-load-such-file/33224691#33224691">this solution</a> from <a href="http://stackoverflow.com/users/5289820/shaun-sweet">Shaun Sweet</a>:</p>
+
+<blockquote>
+  <p>make sure you not only run bundle install, but that you ALSO kill the server and reload it to make sure it then loads in the new gems. you can also check your gemfile for ‘spring’. if thats loaded too, you’ll want to comment that out, reload the server and try it then. that should take care of all possibilities.</p>
+</blockquote>
+
+<p>I commented out the ‘spring’ gem in my Gemfile, and reloaded the Rails server (I didn’t need to run Bundler)…</p>
+
+<p><a data-flickr-embed="true" href="https://www.flickr.com/photos/abuckingham/22508361752/in/photostream/" title="passing-test-10262015"><img src="https://farm1.staticflickr.com/689/22508361752_35a334ddd9_o.png" width="639" height="358" alt="passing-test-10262015" class="img-responsive" /></a><script async="" src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script></p>
+
+<p>And my tests passed! After that, I removed the commenting from my Gemfile, and restarted the server again.</p>
+
+<p>Apparently, restarting the Rails server might not always be enough. After you’ve verified that the gem is correctly installed, temporarily disabling Spring might help.</p>
 
 	  <br>
 	  <p id="subscribe-invite" class="well well-sm">If you enjoyed this post, you might want to <a href="http://andrewbuckingham.net/blog/feed.atom">subscribe</a>, so you don't miss the next one!</p>
@@ -112,18 +122,18 @@
 	    
 	    <li>
 	      <h3>
-		<a href="/blog/2015/10/27/rails-quick-tip-temporarily-disable-spring">
-		  Rails Quick Tip: Temporarily Disable Spring
-		  <small>Oct 27, 2015</small>
+		<a href="/blog/2015/10/22/hackernest">
+		  HackerNest
+		  <small>Oct 22, 2015</small>
 		</a>
 	      </h3>
 	    </li>
 	    
 	    <li>
 	      <h3>
-		<a href="/blog/2015/10/22/hackernest">
-		  HackerNest
-		  <small>Oct 22, 2015</small>
+		<a href="/blog/2015/10/21/thoughts-on-php">
+		  Thoughts on PHP
+		  <small>Oct 21, 2015</small>
 		</a>
 	      </h3>
 	    </li>
