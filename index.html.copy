@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Home</title>
-    <meta name="description" content="Andrew Buckingham, Ruby/Rails Software Developer in Seattle, WA">
-    <meta
+    <meta name="description" content="Web development and technology site">
     <link rel="alternate" type="application/atom+xml" title="Andrew Buckingham — Feed" href="http://andrewbuckingham.net/blog/feed.atom" />
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -67,15 +66,10 @@
 
     <div class="container-fluid contentContainer marginBottom" id="home">
       <h1 class="center" id="homeTitle">The future is ready. Let's build it together.</h1>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-8 col-md-offset-2">
-            <p class="lead text-center marginTop">Hello, my name is Andrew Buckingham.<br>I'm a Ruby/Rails Software Developer, available for hire in Seattle, WA.<br>
-              I strive to write clean, modular, test-driven code, that solves real problems.</p>
-            <br>
-            <p class="lead text-center">How can I help you? Please <a href="#contact" id="get-in-touch-link">get in touch</a>.</p>
-          </div>
-        </div>
+      <div class="row" id="devices">
+	<div class="col-md-8 col-md-offset-2">
+	  <img src="/assets/images/devices.png" class="img-responsive" alt="devices">
+	</div>
       </div>
     </div>
 

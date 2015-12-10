@@ -12,9 +12,13 @@ ul.navbar-nav .navbar-right {
 }
 
 .navbar-inverse .navbar-brand {
-    color:#0093f3;
+    color:#9ED9FF;
+
 }
 
+#get-in-touch-link {
+    color: red;
+}
 /* Center responsive images */
 .img-responsive.img-center {
     margin: 0 auto;
@@ -83,12 +87,18 @@ div#hello {
 }
 
 #home {
-    background-color:#0093f3;
+    /* background-color:#0093f3; */
+    background-color: #9ed9ff;
     width:100%;
 }
 
+
 #homeTitle {
     margin:175px 0 75px 0;
+}
+
+#homeSummary {
+    margin-top: 200px;   
 }
 
 #about {
@@ -156,7 +166,7 @@ ul#contactList li i {
 marginbody {
     position:relative;
 }
-    
+
 .marginBottom {
     margin-bottom:60px;
 }
