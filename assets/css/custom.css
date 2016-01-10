@@ -395,11 +395,12 @@ article.markdown-body.entry-content {
 }
 
 a.data-linklog{
-    color: ##898181;
+    color: #898181;
     font-size: .8em;
 }
 
-span.permalink-infinity {
+.permalink-infinity {
     margin-left: 5px;
     color: red;
 }
+
