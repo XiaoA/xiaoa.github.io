@@ -393,3 +393,13 @@ article.markdown-body.entry-content {
 .glyphicon-arrow-left {
     margin-right: 10px;
 }
+
+a.data-linklog{
+    color: ##898181;
+    font-size: .8em;
+}
+
+span.permalink-infinity {
+    margin-left: 5px;
+    color: red;
+}
