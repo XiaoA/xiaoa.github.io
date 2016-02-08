@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>An Introduction to Emacs Lisp</title>
+    <title>Bash Function to Open Latest Migration</title>
     <meta name="description" content="Web development and technology site">
 
     <!-- Google Analytics -->
@@ -30,7 +30,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/assets/css/custom.css">
     <link rel="stylesheet" href="/assets/css/syntax.css">
-    <link rel="canonical" href="http://andrewbuckingham.net/blog/2016/01/14/an-introduction-to-emacs-lisp">
+    <link rel="canonical" href="http://andrewbuckingham.net/blog/2016/02/08/bash-function-to-open-latest-migration">
   </head>
 
   <body data-spy="scroll" data-target:".navbar-collapse">
@@ -70,25 +70,20 @@
 
         <div class="post">
           <h1 class="post-title">
-            An Introduction to Emacs Lisp
+            Bash Function to Open Latest Migration
           </h1>
 	  <div class="meta_wrapper">
 	    <ul class="post-meta">
-	      <span class="post-date"><li>Jan 14, 2016
+	      <span class="post-date"><li>Feb 8, 2016
 	      </li></span>
-	      <span class="post-tags"><li>Tags: <a href="/tag/announcements"> announcements </a> <a href="/tag/emacs"> emacs </a> <a href="/tag/vim"> vim </a>  </li></span>
+	      <span class="post-tags"><li>Tags: <a href="/tag/linklog"> linklog </a> <a href="/tag/rails"> rails </a> <a href="/tag/code"> code </a> <a href="/tag/emacs"> emacs </a> <a href="/tag/bash"> bash </a> <a href="/tag/quick tip"> quick tip </a>  </li></span>
 	    </ul>
 	  </div>
-	  <p>Harry R. Schwartz has <a href="http://harryrschwartz.com/2014/04/08/an-introduction-to-emacs-lisp.html">a great introductory blog post</a> about Emacs, complete with links to other resources and a video of his <a href="http://emacsnyc.org/2014/04/07/an-introduction-to-emacs-lisp.html">2014 talk</a> at the New York Emacs Meetup, in 2014.</p>
+	  <p>If you search for Rails migrations on the command line, Weston Ganger has <a href="http://solidfoundationwebdev.com/blog/posts/create-an-bash-function-to-open-latest-active-record-migration">a great tip</a> to make Rails develpment easier, by setting up a Bash function to allow you to easily jump to your last migration.</p>
 
-<p>I’ve written a couple posts about Emacs, as well:</p>
+<p>If, like me, you use <strong>’~/.bash_profile’</strong> rather than <strong>’~/.bashrc’</strong>, you’ll want to change that.</p>
 
-<ol>
-  <li><a href="http://andrewbuckingham.net/blog/2014/07/27/Emacs-My-Editor-of-Choice/">Emacs: My Editor of Choice</a>: Reading this again, I wonder if it came off a bit too strongly worded. I really don’t care what editor or IDE anyone uses. In fact, I also provided some great Vim resources.</li>
-  <li><a href="http://andrewbuckingham.net/blog/2015/07/17/kcruby-emacs-demo/">KCRuby Emacs Demo</a>: These notes are based on a talk I was scheduled to give at KCRuby, but there wasn’t enough time.</li>
-</ol>
-
-<p>I’ve been thinking it might be interesting to start an Emacs meetup in Seattle. If you’re interested, please contact me, and let me what day(s) of the week would be most convenient. If I set it up, it would probably be once a month, unless there was more of a demand.</p>
+<p>In Emacs, you either use the <a href="https://github.com/eschulte/rinari/blob/master/rinari.el">‘rinari-find-migration’</a> function, which is bound to (C-c ‘ f i) by default, or just use <a href="http://batsov.com/projectile/">Projectile</a>. Personally, I use <a href="http://tuhdo.github.io/helm-intro.html">Helm</a> on Emacs, so I find <a href="http://tuhdo.github.io/helm-projectile.html">Helm Projectile</a> the fastest way to access any files in the project I’m working on.</p>
 
 	  <br>
 	  <p id="subscribe-invite" class="well well-sm">If you enjoyed this post, you might want to <a href="http://andrewbuckingham.net/blog/feed.atom">subscribe</a>, so you don't miss the next one!</p>
@@ -101,9 +96,9 @@
 	    
 	    <li>
 	      <h3>
-		<a href="/blog/2016/02/08/bash-function-to-open-latest-migration">
-		  Bash Function to Open Latest Migration
-		  <small>Feb 8, 2016</small>
+		<a href="/blog/2016/01/14/an-introduction-to-emacs-lisp">
+		  An Introduction to Emacs Lisp
+		  <small>Jan 14, 2016</small>
 		</a>
 	      </h3>
 	    </li>
@@ -129,33 +124,6 @@
 	  </ul>
 	</div>
 	<hr>
-	
-	<div id="disqus_thread" class ="well well-sm"></div>
-	<script type="text/javascript">
-	 /* * * CONFIGURATION VARIABLES * * */
-	 var disqus_shortname = 'andrewbuckingham';
-
-	 /* * * DON'T EDIT BELOW THIS LINE * * */
-	 (function() {
-           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	 })();
-	</script>
-	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
-	<script type="text/javascript">
-	 /* * * CONFIGURATION VARIABLES * * */
-	 var disqus_shortname = 'andrewbuckingham';
-
-	 /* * * DON'T EDIT BELOW THIS LINE * * */
-	 (function () {
-           var s = document.createElement('script'); s.async = true;
-           s.type = 'text/javascript';
-           s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-           (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-	 }());
-	</script>
 	
 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
