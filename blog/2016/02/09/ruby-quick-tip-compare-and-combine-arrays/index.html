@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>HackerNest</title>
+    <title>Ruby Quick Tip: Compare and Combine Arrays</title>
     <meta name="description" content="Web development and technology site">
 
     <!-- Google Analytics -->
@@ -30,7 +30,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/assets/css/custom.css">
     <link rel="stylesheet" href="/assets/css/syntax.css">
-    <link rel="canonical" href="http://andrewbuckingham.net/blog/2015/10/22/hackernest">
+    <link rel="canonical" href="http://andrewbuckingham.net/blog/2016/02/09/ruby-quick-tip-compare-and-combine-arrays">
   </head>
 
   <body data-spy="scroll" data-target:".navbar-collapse">
@@ -70,27 +70,56 @@
 
         <div class="post">
           <h1 class="post-title">
-            HackerNest
+            Ruby Quick Tip: Compare and Combine Arrays
           </h1>
 	  <div class="meta_wrapper">
 	    <ul class="post-meta">
-	      <span class="post-date"><li>Oct 22, 2015
+	      <span class="post-date"><li>Feb 9, 2016
 	      </li></span>
-	      <span class="post-tags"><li>Tags: <a href="/tag/announcements"> announcements </a> <a href="/tag/career"> career </a> <a href="/tag/social"> social </a>  </li></span>
+	      <span class="post-tags"><li>Tags: <a href="/tag/ruby"> ruby </a> <a href="/tag/code"> code </a> <a href="/tag/quick tip"> quick tip </a>  </li></span>
 	    </ul>
 	  </div>
-	  <p>Two nights ago (Tuesday, October 20, 2015), I attended the Seattle HackerNest Tech Social. Because I had some free time, I decided to volunteer, and I had a blast! I found out about it through <a href="http://meetup.com">meetup.com</a>, which I’ve <a href="http://andrewbuckingham.net/blog/2015/07/17/kcruby-emacs-demo/">mentioned before</a>. Apparently, there had been a local group before, but they’d stopped meeting for a while, so this was a relaunch.</p>
+	  <p>Given two Ruby arrays, how would you quickly compare or combine the elements?</p>
+
+<p>In Ruby, this is really simple. Let’s say we have two arrays, representing members of a volleyball team and a softball team:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">volleyball_team</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;Alex&quot;</span><span class="p">,</span> <span class="s2">&quot;Karen&quot;</span><span class="p">,</span> <span class="s2">&quot;Pete&quot;</span><span class="p">,</span> <span class="s2">&quot;Alicia&quot;</span><span class="o">]</span>
+<span class="n">softball_team</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;Karen&quot;</span><span class="p">,</span> <span class="s2">&quot;Dante&quot;</span><span class="p">,</span> <span class="s2">&quot;Pete&quot;</span><span class="o">]</span></code></pre></div>
+
+<p>To see who is on both teams, we can use the <strong>‘&amp;’</strong> operator and assign it to <strong>‘both_teams’</strong>:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">both_teams</span> <span class="o">=</span> <span class="n">volleyball_team</span> <span class="o">&amp;</span> <span class="n">softball_team</span></code></pre></div>
 
 <!-- more -->
 
-<p><a href="http://hackernest.com">HackerNest</a> is a group that seeks to unite technically-minded people together to build stronger communities and solve problems, such as <a href="http://hackernest.com/debmentiahack/">dementia</a>. As they explain <a href="http://hackernest.com/about/">in their own words</a>:</p>
+<p>This returns a new array that includes shared members of both teams, <strong>both_teams</strong>:</p>
 
-<blockquote>
-  <p>HackerNest is an international nonprofit focused on building supportive tech communities everywhere – strengthening local ecosystems through unpretentious community events, epic, meaningful, universally acclaimed cause-hackathons, and other tech-community uniting projects to improve humanity, technological advancement, and overall economic prosperity.</p>
-</blockquote>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">both_teams</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="s2">&quot;Karen&quot;</span><span class="p">,</span> <span class="s2">&quot;Pete&quot;</span><span class="o">]</span></code></pre></div>
 
-<p>I go to a lot of meetups, because I enjoy meeting people and I always learn so much. The great thing about this group was that we talked, drank beer, played ping-pong, and had a great time together. I met some new friends, and I think this could be the beginning of a great new community. I hope to play a bigger part in helping plan and prepare these events in the future. If you’re in Seattle, the next <a href="http://www.meetup.com/HackerNestSEA/events/226218288/">Seattle HackerNest Tech Social</a> is on November 17th in Seattle, at 8PM. If you’re in Seattle, I hope to see you there. If not, there might be <a href="http://hackernest.com/cities/">a group near you</a>…</p>
+<p>We can also use the <strong>-</strong> operator to find unique members…</p>
 
+<p>Who plays softball, but not volleyball?</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">softball_team</span> <span class="o">-</span> <span class="n">volleyball_team</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="s2">&quot;Dante&quot;</span><span class="o">]</span></code></pre></div>
+
+<p>How about volleyball players absent from the softball team?</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">volleyball_team</span> <span class="o">-</span> <span class="n">softball_team</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="s2">&quot;Alex&quot;</span><span class="p">,</span> <span class="s2">&quot;Alicia&quot;</span><span class="o">]</span></code></pre></div>
+
+<p>Or we can combine them with the <strong>+</strong> operator:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">volleyball_team</span> <span class="o">+</span> <span class="n">softball_team</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="s2">&quot;Alex&quot;</span><span class="p">,</span> <span class="s2">&quot;Karen&quot;</span><span class="p">,</span> <span class="s2">&quot;Pete&quot;</span><span class="p">,</span> <span class="s2">&quot;Alicia&quot;</span><span class="p">,</span> <span class="s2">&quot;Karen&quot;</span><span class="p">,</span> <span class="s2">&quot;Dante&quot;</span><span class="p">,</span> <span class="s2">&quot;Pete&quot;</span><span class="o">]</span></code></pre></div>
+
+<p>Note that the combined list simply concatenates both arrays, so anyone on both team is listed twice. To fix that, we can call the <strong>uniq</strong> method. Let’s assign it to a variable (<strong>‘all_players’</strong>):</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">all_players</span> <span class="o">=</span> <span class="p">(</span><span class="n">volleyball_team</span> <span class="o">+</span> <span class="n">softball_team</span><span class="p">)</span><span class="o">.</span><span class="n">uniq</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="s2">&quot;Alex&quot;</span><span class="p">,</span> <span class="s2">&quot;Karen&quot;</span><span class="p">,</span> <span class="s2">&quot;Pete&quot;</span><span class="p">,</span> <span class="s2">&quot;Alicia&quot;</span><span class="p">,</span> <span class="s2">&quot;Dante&quot;</span><span class="o">]</span></code></pre></div>
+
+<p>Simple features like this make Ruby a delightful programming language!</p>
 
 	  <br>
 	  <p id="subscribe-invite" class="well well-sm">If you enjoyed this post, you might want to <a href="http://andrewbuckingham.net/blog/feed.atom">subscribe</a>, so you don't miss the next one!</p>
@@ -100,15 +129,6 @@
 	<div class="related">
 	  <h2>Related Posts</h2>
 	  <ul class="related-posts">
-	    
-	    <li>
-	      <h3>
-		<a href="/blog/2016/02/09/ruby-quick-tip-compare-and-combine-arrays">
-		  Ruby Quick Tip: Compare and Combine Arrays
-		  <small>Feb 9, 2016</small>
-		</a>
-	      </h3>
-	    </li>
 	    
 	    <li>
 	      <h3>
@@ -124,6 +144,15 @@
 		<a href="/blog/2016/01/12/using-docker-for-rails-development">
 		  Using Docker For Rails Development
 		  <small>Jan 12, 2016</small>
+		</a>
+	      </h3>
+	    </li>
+	    
+	    <li>
+	      <h3>
+		<a href="/blog/2016/01/11/announcing-scenic-versioned-database-views-for-rails">
+		  Announcing Scenic Versioned Database Views For Rails
+		  <small>Jan 11, 2016</small>
 		</a>
 	      </h3>
 	    </li>
